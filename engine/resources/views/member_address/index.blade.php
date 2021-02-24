@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Users</h1>
-                    <a class="btn btn-primary mt-3" href="{{route('user.create')}}">Add New User</a>
+                    <h1>User</h1>
+                    {{-- <a class="btn btn-primary mt-3" href="{{route('member.create')}}">Add New Address</a> --}}
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">User</li>
+                        <li class="breadcrumb-item active">Member Address</li>
                     </ol>
                 </div>
             </div>
@@ -38,25 +38,25 @@
                                         <th>Name</th>
                                         <th>phone</th>
                                         <th>email</th>
-                                        <th></th>
+                                        {{-- <th></th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $user)
+                                    @foreach ($members as $member)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$user->name}}</td>
-                                        <td>{{$user->phone}}</td>
-                                        <td>{{$user->email}}</td>
-                                        <td class="text-center">
-                                            <a class="btn btn-warning" href="{{route('user.edit', $user->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$user->id}})">Delete</a>
-                                            <form method="POST" id="formdelete-{{$user->id}}"
-                                                action="{{route("user.destroy",$user->id)}}">
+                                        <td><a href="{{route('member_address.show', $member->id)}}">{{$member->name}}</a></td>
+                                        <td>{{$member->phone}}</td>
+                                        <td>{{$member->email}}</td>
+                                        {{-- <td class="text-center">
+                                            <a class="btn btn-warning" href="{{route('member.edit', $member->id)}}">Edit</a>
+                                            <a class="btn btn-danger" onclick="destroy({{$member->id}})">Delete</a>
+                                            <form method="POST" id="formdelete-{{$member->id}}"
+                                                action="{{route("member.destroy",$member->id)}}">
                                                 @csrf
                                                 @method("delete")
                                             </form>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                     @endforeach
                                 </tbody>

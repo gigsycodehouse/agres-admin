@@ -1,17 +1,28 @@
 @extends('layouts.master')
 @section('main_content')
+@push('css')
+    <style>
+        td {
+            max-width: 200px;
+        }
+        td img {
+            max-width: inherit;
+        }
+    </style>
+@endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Users</h1>
-                    <a class="btn btn-primary mt-3" href="{{route('user.create')}}">Add New User</a>
+                    <h1>Homepage Banner</h1>
+                    <a class="btn btn-primary mt-3" href="{{route('homepage_banner.create')}}">Add New Banner</a>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">User</li>
+                        <li class="breadcrumb-item"><a href="#">Cms</a></li>
+                        <li class="breadcrumb-item active">homepage banner</li>
                     </ol>
                 </div>
             </div>
@@ -35,24 +46,24 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Name</th>
-                                        <th>phone</th>
-                                        <th>email</th>
+                                        <th>Banner Desktop</th>
+                                        <th>Banner Responsive</th>
+                                        <th>Url</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $user)
+                                    @foreach ($banners as $banner)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$user->name}}</td>
-                                        <td>{{$user->phone}}</td>
-                                        <td>{{$user->email}}</td>
+                                        <td><img src="{{$banner->image_desktop}}" alt=""></td>
+                                        <td><img src="{{$banner->image_responsive}}" alt=""></td>
+                                        <td>{{$banner->url}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-warning" href="{{route('user.edit', $user->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$user->id}})">Delete</a>
-                                            <form method="POST" id="formdelete-{{$user->id}}"
-                                                action="{{route("user.destroy",$user->id)}}">
+                                            <a class="btn btn-warning" href="{{route('homepage_banner.edit', $banner->id)}}">Edit</a>
+                                            <a class="btn btn-danger" onclick="destroy({{$banner->id}})">Delete</a>
+                                            <form method="POST" id="formdelete-{{$banner->id}}"
+                                                action="{{route("homepage_banner.destroy",$banner->id)}}">
                                                 @csrf
                                                 @method("delete")
                                             </form>

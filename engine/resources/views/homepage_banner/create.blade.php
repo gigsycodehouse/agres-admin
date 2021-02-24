@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Add User</h1>
+                    <h1>Add Homepage Banner</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">User</a></li>
-                        <li class="breadcrumb-item active">add</li>
+                        <li class="breadcrumb-item"><a href="#">Cms</a></li>
+                        <li class="breadcrumb-item active">add homepage banner</li>
                     </ol>
                 </div>
             </div>
@@ -30,37 +30,30 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{route('user.store')}}">
+                        <form role="form" method="POST" action="{{route('homepage_banner.store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" name="name" class="form-control" id="name"
-                                        placeholder="Enter name" value="{{old('name')}}">
-                                    @error('name')
+                                    <label for="image_desktop">Banner Desktop</label>
+                                    <input type="file" name="image_desktop" class="form-control" id="image_desktop"
+                                        value="{{old('name')}}">
+                                    @error('image_desktop')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="phone">Phone</label>
-                                    <input type="text" name="phone" class="form-control" id="phone" placeholder="phone" value="{{old('phone')}}">
-                                    @error('phone')
+                                    <label for="image_responsive">Banner Responsive</label>
+                                    <input type="file" name="image_responsive" class="form-control"
+                                        id="image_responsive" value="{{old('image_responsive')}}">
+                                    @error('image_responsive')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email"
-                                        placeholder="email" value="{{old('email')}}">
-                                    @error('email')
-                                    <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password"
-                                        placeholder="password">
-                                    @error('password')
+                                    <label for="url">Url</label>
+                                    <input type="text" name="url" class="form-control" id="url" placeholder="url"
+                                        value="{{old('url')}}">
+                                    @error('url')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>

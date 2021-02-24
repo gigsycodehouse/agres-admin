@@ -16,8 +16,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/sweetalert2.min.css')}}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{asset('assets/plugins/toastr/toastr.min.css')}}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
+    @stack('css')
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -57,6 +65,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
     <script src="{{asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+    <!-- SweetAlert2 -->
+    <script src="{{asset('assets/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+    {{-- <script src="{{asset('assets/js/sweetalert2.min.js')}}"></script> --}}
+    <!-- Toastr -->
+    <script src="{{asset('assets/plugins/toastr/toastr.min.js')}}"></script>
+    <!-- Select2 -->
+    <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
     @stack('js')
 </body>
 

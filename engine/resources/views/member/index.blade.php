@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Users</h1>
-                    <a class="btn btn-primary mt-3" href="{{route('user.create')}}">Add New User</a>
+                    <h1>Members</h1>
+                    <a class="btn btn-primary mt-3" href="{{route('member.create')}}">Add New Member</a>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">User</li>
+                        <li class="breadcrumb-item active">Member</li>
                     </ol>
                 </div>
             </div>
@@ -42,17 +42,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $user)
+                                    @foreach ($members as $member)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$user->name}}</td>
-                                        <td>{{$user->phone}}</td>
-                                        <td>{{$user->email}}</td>
+                                        <td>{{$member->name}}</td>
+                                        <td>{{$member->phone}}</td>
+                                        <td>{{$member->email}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-warning" href="{{route('user.edit', $user->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$user->id}})">Delete</a>
-                                            <form method="POST" id="formdelete-{{$user->id}}"
-                                                action="{{route("user.destroy",$user->id)}}">
+                                            <a class="btn btn-warning" href="{{route('member.edit', $member->id)}}">Edit</a>
+                                            <a class="btn btn-danger" onclick="destroy({{$member->id}})">Delete</a>
+                                            <form method="POST" id="formdelete-{{$member->id}}"
+                                                action="{{route("member.destroy",$member->id)}}">
                                                 @csrf
                                                 @method("delete")
                                             </form>

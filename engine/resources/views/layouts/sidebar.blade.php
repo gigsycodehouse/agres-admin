@@ -28,6 +28,24 @@
                         <p>User</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('member.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Member</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('member_address.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Member Address</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('homepage_banner.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Homepage Banner</p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

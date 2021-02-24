@@ -37,21 +37,33 @@
                                     <label for="name">Name</label>
                                     <input type="text" name="name" class="form-control" id="name"
                                         placeholder="Enter name" value="{{$user->name}}">
+                                    @error('name')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Phone</label>
-                                    <input type="text" name="phone" class="form-control" id="phone"
-                                        placeholder="phone" value="{{$user->phone}}">
+                                    <input type="text" name="phone" class="form-control" id="phone" placeholder="phone"
+                                        value="{{$user->phone}}">
+                                    @error('phone')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email"
-                                        placeholder="email" value="{{$user->email}}">
+                                    <input type="email" name="email" class="form-control" id="email" placeholder="email"
+                                        value="{{$user->email}}">
+                                    @error('email')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
                                     <input type="password" name="password" class="form-control" id="password"
                                         placeholder="leave empty if you dont want to change the password" value="">
+                                    @error('password')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                             <!-- /.card-body -->

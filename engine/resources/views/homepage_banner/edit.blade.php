@@ -1,17 +1,24 @@
 @extends('layouts.master')
 @section('main_content')
+@push('css')
+    <style>
+        .form-group img {
+            max-width: 200px;
+        }
+    </style>
+@endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Add User</h1>
+                    <h1>Edit Banner</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">User</a></li>
-                        <li class="breadcrumb-item active">add</li>
+                        <li class="breadcrumb-item"><a href="#">Cms</a></li>
+                        <li class="breadcrumb-item active">edit homepage banner</li>
                     </ol>
                 </div>
             </div>
@@ -25,42 +32,35 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">
-                            </h3>
+                            <h3 class="card-title"></h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{route('user.store')}}">
+                        <form role="form" method="POST" action="{{route('homepage_banner.update', $banner->id)}}" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" name="name" class="form-control" id="name"
-                                        placeholder="Enter name" value="{{old('name')}}">
-                                    @error('name')
+                                    <label for="image_desktop">Image Desktop</label>
+                                    <img src="{{$banner->image_desktop}}" alt="">
+                                    <input type="file" name="image_desktop" class="form-control" id="image_desktop">
+                                    @error('image_desktop')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="phone">Phone</label>
-                                    <input type="text" name="phone" class="form-control" id="phone" placeholder="phone" value="{{old('phone')}}">
-                                    @error('phone')
+                                    <label for="image_responsive">Image Responsive</label>
+                                    <img src="{{$banner->image_responsive}}" alt="">
+                                    <input type="file" name="image_responsive" class="form-control" id="image_responsive">
+                                    @error('image_responsive')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email"
-                                        placeholder="email" value="{{old('email')}}">
-                                    @error('email')
-                                    <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password"
-                                        placeholder="password">
-                                    @error('password')
+                                    <label for="url">Url</label>
+                                    <input type="text" name="url" class="form-control" id="url" placeholder="url"
+                                        value="{{$banner->url}}">
+                                    @error('url')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
