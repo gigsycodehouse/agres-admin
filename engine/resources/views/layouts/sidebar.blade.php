@@ -46,6 +46,18 @@
                         <p>Homepage Banner</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('homepage_bottom_menu.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Homepage Bottom Menu</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('homepage_top_menu.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Homepage Top Menu</p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

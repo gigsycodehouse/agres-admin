@@ -32,4 +32,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('member_address/{member_id}/destroy/{address_id}', 'MemberAddressController@destroy')->name('member_address.destroy');
 
     Route::resource('homepage_banner', 'HomeBannerController');
+    Route::resource('homepage_bottom_menu', 'HomeBottomMenuController');
+    Route::resource('homepage_top_menu', 'HomeTopMenuController');
 });
