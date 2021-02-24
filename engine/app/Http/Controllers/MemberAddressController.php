@@ -21,15 +21,17 @@ class MemberAddressController extends Controller
         return view('member_address.create', $d);
     }
 
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
         $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
+            // 'name' => 'required',
+            // 'phone' => 'required',
         ]);
 
+        $d['member_id'] = $id;
+        $request->merge($d);
         MemberAddress::create($request->except('_token'));
-        return redirect(route('member_address.index'))->with(['success' => " add new member success"]);
+        return redirect(route('member_address.show', $id))->with(['success' => " add member address success"]);
     }
 
     public function show($id)
@@ -38,40 +40,37 @@ class MemberAddressController extends Controller
         return view('member_address.show', $d);
     }
 
-    public function edit($id)
+    public function edit($id,$address_id)
     {
-        $d['member'] = MemberAddress::find($id);
+        $d['member'] = Member::find($id);
+        $d['address'] = MemberAddress::find($address_id);
         return view('member_address.edit', $d);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $address_id)
     {
         $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
+            // 'name' => 'required',
+            // 'phone' => 'required',
         ]);
 
-        $member = MemberAddress::find($id);
-        $member->name = $request->name;
-        $member->phone = $request->phone;
+        $address = MemberAddress::find($address_id);
+        $address->name = $request->name;
+        $address->phone = $request->phone;
+        $address->address = $request->address;
+        $address->province_id = $request->province_id;
+        $address->city_id = $request->city_id;
+        $address->district_id = $request->district_id;
+        $address->postal_code = $request->postal_code;
+        $address->save();
 
-        if ($request->password != null) {
-            $request->validate([
-                'password' => 'required|min:8',
-            ]);
-            $member->password = Hash::make($request->password);
-        }
-
-        $member->save();
-
-        return redirect(route('member_address.index'))->with(['success' => " update member $member->name success"]);
+        return redirect(route('member_address.show', $id))->with(['success' => " update member address success"]);
     }
 
-    public function destroy($id)
+    public function destroy($id, $address_id)
     {
-        $member = MemberAddress::find($id);
-        $name = $member->name;
-        $member->delete();
-        return redirect()->back()->with(['success' => " delete member $name success"]);
+        $address = MemberAddress::find($address_id);
+        $address->delete();
+        return redirect()->back()->with(['success' => " delete member address success"]);
     }
 }

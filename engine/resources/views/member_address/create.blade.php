@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Recipient's Phone</label>
-                                    <input type="text" phone="phone" class="form-control" id="phone"
+                                    <input type="text" name="phone" class="form-control" id="phone"
                                         placeholder="Enter nama penerima" value="{{old('phone')}}">
                                     @error('phone')
                                     <p class="text-danger">{{ $message }}</p>
@@ -58,10 +58,9 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    {{-- <label for="province_id">Province</label> --}}
+                                    <label for="province_id">Province</label>
                                     <select class="form-control select2" name="province_id" id="province_id">
-                                        <option value="a">a</option>
-                                        <option value="b">b</option>
+                                        <option value="1">1</option>
                                     </select>
                                     {{-- <input type="text" name="province_id" class="form-control" id="province_id" placeholder="province_id" value="{{old('province_id')}}"> --}}
                                     @error('province_id')

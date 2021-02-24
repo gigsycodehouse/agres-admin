@@ -7,7 +7,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>List Address for User <b>{{$member->name}}</b></h1>
-                    <a class="btn btn-primary mt-3" href="{{route('member_address.create', $member->id)}}">Add New Address</a>
+                    <a class="btn btn-primary mt-3" href="{{route('member_address.create', $member->id)}}">Add New
+                        Address</a>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -36,9 +37,13 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Address</th>
-                                        <th>Address</th>
-                                        <th>Address</th>
+                                        <th>Recipient's Name</th>
+                                        <th>Recipient's Phone</th>
+                                        <th>Full Address</th>
+                                        <th>Province</th>
+                                        <th>City</th>
+                                        <th>District</th>
+                                        <th>Postal Code</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -46,14 +51,19 @@
                                     @foreach ($member->address as $address)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
+                                        <td>{{$address->name}}</td>
+                                        <td>{{$address->phone}}</td>
                                         <td>{{$address->address}}</td>
-                                        <td>{{$address->address}}</td>
-                                        <td>{{$address->address}}</td>
+                                        <td>{{$address->province_id}}</td>
+                                        <td>{{$address->city_id}}</td>
+                                        <td>{{$address->district_id}}</td>
+                                        <td>{{$address->postal_code}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-warning" href="{{route('member_address.edit', $address->id)}}">Edit</a>
+                                            <a class="btn btn-warning"
+                                                href="{{route('member_address.edit', ['member_id' => $member->id, 'address_id'=>$address->id])}}">Edit</a>
                                             <a class="btn btn-danger" onclick="destroy({{$address->id}})">Delete</a>
                                             <form method="POST" id="formdelete-{{$address->id}}"
-                                                action="{{route("member_address.destroy",$address->id)}}">
+                                                action="{{route("member_address.destroy",['member_id' => $member->id, 'address_id'=>$address->id])}}">
                                                 @csrf
                                                 @method("delete")
                                             </form>

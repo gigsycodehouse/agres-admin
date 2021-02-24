@@ -29,39 +29,65 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{route('member.update', $member->id)}}">
+                        <form role="form" method="POST"
+                            action="{{route('member_address.update', ['member_id'=>$member->id,'address_id'=>$address->id])}}">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name">Name</label>
+                                    <label for="name">Recipient's Name</label>
                                     <input type="text" name="name" class="form-control" id="name"
-                                        placeholder="Enter name" value="{{$member->name}}">
+                                        placeholder="Enter nama penerima" value="{{$address->name}}">
                                     @error('name')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="phone">Phone</label>
-                                    <input type="text" name="phone" class="form-control" id="phone" placeholder="phone"
-                                        value="{{$member->phone}}">
+                                    <label for="phone">Recipient's Phone</label>
+                                    <input type="text" name="phone" class="form-control" id="phone"
+                                        placeholder="Enter nama penerima" value="{{$address->phone}}">
                                     @error('phone')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="email"
-                                        value="{{$member->email}}">
-                                    @error('email')
+                                    <label for="address">Full Address</label>
+                                    <input type="text" name="address" class="form-control" id="address"
+                                        placeholder="Enter address" value="{{$address->address}}">
+                                    @error('address')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password"
-                                        placeholder="leave empty if you dont want to change the password" value="">
-                                    @error('password')
+                                    <label for="province_id">Province</label>
+                                    <select class="form-control select2" name="province_id" id="province_id">
+                                        <option value="1">1</option>
+                                    </select>
+                                    @error('province_id')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="city_id">City</label>
+                                    <input type="city_id" name="city_id" class="form-control" id="city_id"
+                                        placeholder="city_id" value="{{old('city_id')}}">
+                                    @error('city_id')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="district_id">District</label>
+                                    <input type="district_id" name="district_id" class="form-control" id="district_id"
+                                        placeholder="district_id">
+                                    @error('district_id')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="postal_code">Postal Code</label>
+                                    <input type="postal_code" name="postal_code" class="form-control" id="postal_code"
+                                        placeholder="postal_code">
+                                    @error('postal_code')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
