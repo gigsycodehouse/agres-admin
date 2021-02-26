@@ -33,7 +33,7 @@ class HomeBannerController extends Controller
                 $imageNewName =  uniqid() . '_' . $imageName;
                 $destinationPath = 'assets/cms/home/';
                 $v->move($destinationPath, $imageNewName);
-                $path_file =  url('/').'/assets/cms/home/' . $imageNewName;
+                $path_file =  $destinationPath . $imageNewName;
 
                 $store->$i = $path_file;
             }
@@ -63,7 +63,7 @@ class HomeBannerController extends Controller
                 $imageNewName =  uniqid() . '_' . $imageName;
                 $destinationPath = 'assets/cms/home/';
                 $v->move($destinationPath, $imageNewName);
-                $path_file =  url('/').'/assets/cms/home/' . $imageNewName;
+                $path_file =  $destinationPath . $imageNewName;
 
                 $store->$i = $path_file;
             }

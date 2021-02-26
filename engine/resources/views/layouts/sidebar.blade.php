@@ -28,35 +28,63 @@
                         <p>User</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{route('member.index')}}" class="nav-link">
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-user"></i>
-                        <p>Member</p>
+                        <p>
+                            Member
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('member.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Member</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('member_address.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Member Address</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="{{route('member_address.index')}}" class="nav-link">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>Member Address</p>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            CMS
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('homepage_banner.index')}}" class="nav-link">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>Homepage Banner</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('homepage_bottom_menu.index')}}" class="nav-link">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>Homepage Bottom Menu</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('homepage_top_menu.index')}}" class="nav-link">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>Homepage Top Menu</p>
-                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('homepage_banner.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Homepage Banner</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('homepage_promo_banner.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Homepage Promo Banner</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('homepage_bottom_menu.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Homepage Bottom Menu</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('homepage_top_menu.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Homepage Top Menu</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </nav>

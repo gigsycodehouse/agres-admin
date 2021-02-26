@@ -2,9 +2,7 @@
 @section('main_content')
 @push('css')
     <style>
-        .form-group img {
-            max-width: 200px;
-        }
+
     </style>
 @endpush
 <div class="content-wrapper">
@@ -74,7 +72,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="icon">Icon</label>
-                                    <img src="{{$menu->icon}}" alt="">
+                                    <div>
+                                        <img src="{{asset($menu->icon)}}" alt="">
+                                    </div>
                                     <input type="file" name="icon" class="form-control" id="icon">
                                     @error('icon')
                                     <p class="text-danger">{{ $message }}</p>

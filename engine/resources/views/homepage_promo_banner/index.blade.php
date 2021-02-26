@@ -16,13 +16,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Homepage Banner</h1>
-                    <a class="btn btn-primary mt-3" href="{{route('homepage_banner.create')}}">Add New Banner</a>
+                    <h1>Homepage Bottom Menu</h1>
+                    <a class="btn btn-primary mt-3" href="{{route('homepage_promo_banner.create')}}">Add New Bottom Menu</a>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Cms</a></li>
-                        <li class="breadcrumb-item active">homepage banner</li>
+                        <li class="breadcrumb-item active">homepage bottom menu</li>
                     </ol>
                 </div>
             </div>
@@ -46,9 +46,9 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Banner Desktop</th>
-                                        <th>Banner Responsive</th>
+                                        <th>Banner</th>
                                         <th>Url</th>
+                                        <th>Order</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -56,14 +56,14 @@
                                     @foreach ($banners as $banner)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td><img src="{{asset($banner->image_desktop)}}" alt=""></td>
-                                        <td><img src="{{asset($banner->image_responsive)}}" alt=""></td>
+                                        <td><img src="{{asset($banner->file)}}" alt=""></td>
                                         <td>{{$banner->url}}</td>
+                                        <td>{{$banner->order}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-warning" href="{{route('homepage_banner.edit', $banner->id)}}">Edit</a>
+                                            <a class="btn btn-warning" href="{{route('homepage_promo_banner.edit', $banner->id)}}">Edit</a>
                                             <a class="btn btn-danger" onclick="destroy({{$banner->id}})">Delete</a>
                                             <form method="POST" id="formdelete-{{$banner->id}}"
-                                                action="{{route("homepage_banner.destroy",$banner->id)}}">
+                                                action="{{route("homepage_promo_banner.destroy",$banner->id)}}">
                                                 @csrf
                                                 @method("delete")
                                             </form>

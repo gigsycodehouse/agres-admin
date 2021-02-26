@@ -62,7 +62,7 @@
                                         <td>{{$menu->description}}</td>
                                         <td>{{$menu->link}}</td>
                                         <td>{{$menu->order}}</td>
-                                        <td><img src="{{$menu->icon}}" alt=""></td>
+                                        <td><img src="{{asset($menu->icon)}}" alt=""></td>
                                         <td class="text-center">
                                             <a class="btn btn-warning" href="{{route('homepage_top_menu.edit', $menu->id)}}">Edit</a>
                                             <a class="btn btn-danger" onclick="destroy({{$menu->id}})">Delete</a>

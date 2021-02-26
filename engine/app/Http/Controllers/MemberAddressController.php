@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Member;
 use App\Models\MemberAddress;
+use App\Models\Province;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class MemberAddressController extends Controller
     public function create($id)
     {
         $d['member'] = Member::where('id', $id)->first();
+        $d['provinces'] = Province::all();
         return view('member_address.create', $d);
     }
 
@@ -36,7 +38,7 @@ class MemberAddressController extends Controller
 
     public function show($id)
     {
-        $d['member'] = Member::where('id', $id)->with('address')->first();
+        $d['member'] = Member::where('id', $id)->with(['address.province', 'address.city', 'address.district'])->first();
         return view('member_address.show', $d);
     }
 
@@ -44,6 +46,7 @@ class MemberAddressController extends Controller
     {
         $d['member'] = Member::find($id);
         $d['address'] = MemberAddress::find($address_id);
+        $d['provinces'] = Province::all();
         return view('member_address.edit', $d);
     }
 

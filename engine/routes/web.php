@@ -21,8 +21,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/', function () {
         return view('dashboard');
     });
+    Route::get('get/{province_id}/cities', 'Controller@getCities')->name('get.city');
+    Route::get('get/{city_id}/districts', 'Controller@getDistricts')->name('get.district');
+
     Route::resource('user', 'UserController');
     Route::resource('member', 'MemberController');
+
     Route::get('member_address/', 'MemberAddressController@index')->name('member_address.index');
     Route::get('member_address/{member_id}/show', 'MemberAddressController@show')->name('member_address.show');
     Route::get('member_address/{member_id}/create', 'MemberAddressController@create')->name('member_address.create');
@@ -34,4 +38,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('homepage_banner', 'HomeBannerController');
     Route::resource('homepage_bottom_menu', 'HomeBottomMenuController');
     Route::resource('homepage_top_menu', 'HomeTopMenuController');
+    Route::resource('homepage_promo_banner', 'HomePromoBannerController');
 });

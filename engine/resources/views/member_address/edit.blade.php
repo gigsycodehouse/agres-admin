@@ -61,7 +61,10 @@
                                 <div class="form-group">
                                     <label for="province_id">Province</label>
                                     <select class="form-control select2" name="province_id" id="province_id">
-                                        <option value="1">1</option>
+                                        <option disabled>select province</option>
+                                        @foreach ($provinces as $province)
+                                        <option value="{{$province->id}}" @if ($address->province_id == $province->id) selected @endif>{{$province->nm_propinsi}}</option>
+                                        @endforeach
                                     </select>
                                     @error('province_id')
                                     <p class="text-danger">{{ $message }}</p>
@@ -69,16 +72,16 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="city_id">City</label>
-                                    <input type="city_id" name="city_id" class="form-control" id="city_id"
-                                        placeholder="city_id" value="{{old('city_id')}}">
+                                    <select class="form-control select2" name="city_id" id="city_id">
+                                    </select>
                                     @error('city_id')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="district_id">District</label>
-                                    <input type="district_id" name="district_id" class="form-control" id="district_id"
-                                        placeholder="district_id">
+                                    <select class="form-control select2" name="district_id" id="district_id">
+                                    </select>
                                     @error('district_id')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
@@ -86,7 +89,7 @@
                                 <div class="form-group">
                                     <label for="postal_code">Postal Code</label>
                                     <input type="postal_code" name="postal_code" class="form-control" id="postal_code"
-                                        placeholder="postal_code">
+                                        placeholder="postal_code" value="{{$address->postal_code}}">
                                     @error('postal_code')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
@@ -114,5 +117,55 @@
 @endsection
 @push('js')
 <script>
+    $('.select2').select2({
+      theme: 'bootstrap4'
+    })
+
+    $('#province_id').change(function(){
+        var province_id = $('#province_id').find(":selected").val();
+        $.ajax({
+            url: `{{url('/')}}/get/`+province_id+`/cities`,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'get',
+            success: function (data){
+                $('#city_id').empty()
+                $.each(data, function(index, val){
+                    var selected = ''
+                    if (val.id == '{{$address->city_id}}'){
+                        selected = 'selected'
+                    }
+                    $('#city_id').append(`<option value="`+val.id+`" `+selected+`>`+val.type+` `+val.nm_kota+`</option>`)
+                })
+                $("#city_id").change();
+            }
+        })
+    })
+
+    $('#city_id').change(function(){
+        var city_id = $('#city_id').find(":selected").val();
+        $.ajax({
+            url: `{{url('/')}}/get/`+city_id+`/districts`,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'get',
+            success: function (data){
+                $('#district_id').empty()
+                $.each(data, function(index, val){
+                    var selected = ''
+                    if (val.id == '{{$address->district_id}}'){
+                        selected = 'selected'
+                    }
+                    $('#district_id').append(`<option value="`+val.id+`" `+selected+`>`+val.nm_kecamatan+`</option>`)
+                })
+            }
+        })
+    })
+
+    $(document).ready(function() {
+        $("#province_id").change();
+    });
 </script>
 @endpush

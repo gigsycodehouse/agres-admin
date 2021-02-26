@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>User</h1>
+                    <h1>Member</h1>
                     {{-- <a class="btn btn-primary mt-3" href="{{route('member.create')}}">Add New Address</a> --}}
                 </div>
                 <div class="col-sm-6">
@@ -31,36 +31,42 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Name</th>
-                                        <th>phone</th>
-                                        <th>email</th>
-                                        {{-- <th></th> --}}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($members as $member)
-                                    <tr>
-                                        <td>{{$loop->iteration}}</td>
-                                        <td><a href="{{route('member_address.show', $member->id)}}">{{$member->name}}</a></td>
-                                        <td>{{$member->phone}}</td>
-                                        <td>{{$member->email}}</td>
-                                        {{-- <td class="text-center">
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Name</th>
+                                                <th>phone</th>
+                                                <th>email</th>
+                                                {{-- <th></th> --}}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($members as $member)
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$member->name}}</td>
+                                                <td>{{$member->phone}}</td>
+                                                <td><a
+                                                        href="{{route('member_address.show', $member->id)}}">{{$member->email}}</a>
+                                                </td>
+                                                {{-- <td class="text-center">
                                             <a class="btn btn-warning" href="{{route('member.edit', $member->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$member->id}})">Delete</a>
-                                            <form method="POST" id="formdelete-{{$member->id}}"
-                                                action="{{route("member.destroy",$member->id)}}">
-                                                @csrf
-                                                @method("delete")
-                                            </form>
-                                        </td> --}}
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                                <a class="btn btn-danger" onclick="destroy({{$member->id}})">Delete</a>
+                                                <form method="POST" id="formdelete-{{$member->id}}"
+                                                    action="{{route("member.destroy",$member->id)}}">
+                                                    @csrf
+                                                    @method("delete")
+                                                </form>
+                                                </td> --}}
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>

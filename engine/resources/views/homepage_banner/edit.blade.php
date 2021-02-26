@@ -1,11 +1,7 @@
 @extends('layouts.master')
 @section('main_content')
 @push('css')
-    <style>
-        .form-group img {
-            max-width: 200px;
-        }
-    </style>
+
 @endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -36,13 +32,16 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{route('homepage_banner.update', $banner->id)}}" enctype="multipart/form-data">
+                        <form role="form" method="POST" action="{{route('homepage_banner.update', $banner->id)}}"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="image_desktop">Image Desktop</label>
-                                    <img src="{{$banner->image_desktop}}" alt="">
+                                    <div>
+                                        <img src="{{asset($banner->image_desktop)}}" alt="">
+                                    </div>
                                     <input type="file" name="image_desktop" class="form-control" id="image_desktop">
                                     @error('image_desktop')
                                     <p class="text-danger">{{ $message }}</p>
@@ -50,8 +49,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="image_responsive">Image Responsive</label>
-                                    <img src="{{$banner->image_responsive}}" alt="">
-                                    <input type="file" name="image_responsive" class="form-control" id="image_responsive">
+                                    <div>
+                                        <img src="{{asset($banner->image_responsive)}}" alt="">
+                                    </div>
+                                    <input type="file" name="image_responsive" class="form-control"
+                                        id="image_responsive">
                                     @error('image_responsive')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror

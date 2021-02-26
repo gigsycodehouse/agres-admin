@@ -54,9 +54,9 @@
                                         <td>{{$address->name}}</td>
                                         <td>{{$address->phone}}</td>
                                         <td>{{$address->address}}</td>
-                                        <td>{{$address->province_id}}</td>
-                                        <td>{{$address->city_id}}</td>
-                                        <td>{{$address->district_id}}</td>
+                                        <td>{{$address->province->nm_propinsi}}</td>
+                                        <td>{{$address->city->nm_kota}}</td>
+                                        <td>{{$address->district->nm_kecamatan}}</td>
                                         <td>{{$address->postal_code}}</td>
                                         <td class="text-center">
                                             <a class="btn btn-warning"

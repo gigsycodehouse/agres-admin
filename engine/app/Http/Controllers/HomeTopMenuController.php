@@ -36,7 +36,7 @@ class HomeTopMenuController extends Controller
             $imageNewName =  uniqid() . '_' . $imageName;
             $destinationPath = 'assets/cms/home/menu/';
             $icon->move($destinationPath, $imageNewName);
-            $path_file =  url('/') . '/assets/cms/home/menu/' . $imageNewName;
+            $path_file =  $destinationPath . $imageNewName;
 
             $store->icon = $path_file;
         }
@@ -69,7 +69,7 @@ class HomeTopMenuController extends Controller
             $imageNewName =  uniqid() . '_' . $imageName;
             $destinationPath = 'assets/cms/home/menu';
             $icon->move($destinationPath, $imageNewName);
-            $path_file =  url('/') . '/assets/cms/home/menu' . $imageNewName;
+            $path_file =  $destinationPath . $imageNewName;
 
             $update->icon = $path_file;
         }

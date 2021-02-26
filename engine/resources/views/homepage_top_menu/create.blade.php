@@ -68,6 +68,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="icon">Icon</label>
+                                    <div>
+                                        <img src="" alt="" id="imgreview" style="max-width: 200px">
+                                    </div>
                                     <input type="file" name="icon" class="form-control" id="icon"
                                         value="{{old('name')}}">
                                     @error('icon')
@@ -97,5 +100,21 @@
 @endsection
 @push('js')
 <script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imgreview').attr('src', e.target.result);
+                $('#imgreview').css('padding', '15px');
+            }
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#icon").change(function() {
+        readURL(this);
+    });
 </script>
 @endpush
