@@ -28,6 +28,12 @@
                         <p>User</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('blast_email.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Blast Email</p>
+                    </a>
+                </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-user"></i>

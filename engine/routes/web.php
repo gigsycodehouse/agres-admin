@@ -39,4 +39,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('homepage_bottom_menu', 'HomeBottomMenuController');
     Route::resource('homepage_top_menu', 'HomeTopMenuController');
     Route::resource('homepage_promo_banner', 'HomePromoBannerController');
+
+    Route::resource('blast_email', 'BlastEmailController');
 });
