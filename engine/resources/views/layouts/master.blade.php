@@ -30,6 +30,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
     <!-- iCheck for checkboxes and radio inputs -->
     <link rel="stylesheet" href="{{asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet"
+        href="{{asset('assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
     <style>
         .form-group img {
             max-width: 200px;
@@ -71,6 +74,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
+    <!-- moment -->
+    <script src="{{asset('assets/plugins/moment/moment.min.js')}}"></script>
     <!-- DataTables -->
     <script src="{{asset('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
@@ -83,6 +88,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{asset('assets/plugins/toastr/toastr.min.js')}}"></script>
     <!-- Select2 -->
     <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="{{asset('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
     @stack('js')
 </body>
 

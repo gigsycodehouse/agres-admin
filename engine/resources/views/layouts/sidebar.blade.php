@@ -92,6 +92,35 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            Product
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('category.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Category</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('sub_category.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Sub Category</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('item.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Product</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

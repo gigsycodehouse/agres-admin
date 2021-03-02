@@ -21,6 +21,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/', function () {
         return view('dashboard');
     });
+    Route::get('get/{category_id}/spesification', 'Controller@getSpesification')->name('get.subcategory');
+    Route::get('get/{category_id}/sub_category', 'Controller@getSubCategory')->name('get.subcategory');
     Route::get('get/{province_id}/cities', 'Controller@getCities')->name('get.city');
     Route::get('get/{city_id}/districts', 'Controller@getDistricts')->name('get.district');
 
@@ -41,4 +43,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('homepage_promo_banner', 'HomePromoBannerController');
 
     Route::resource('blast_email', 'BlastEmailController');
+
+    Route::resource('category', 'CategoryController');
+    Route::resource('sub_category', 'SubCategoryController');
+
+    Route::resource('item', 'ItemController');
+    Route::resource('item_hot', 'ItemHotController');
 });

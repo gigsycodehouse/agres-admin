@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SubCategory extends Model
+class ItemHot extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    function category(){
-        return $this->belongsTo('App\Models\Category', 'category_id');
+
+    function product(){
+        return $this->belongsTo('App\Models\Item', 'item_id');
     }
 }

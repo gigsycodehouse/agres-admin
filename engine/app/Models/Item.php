@@ -9,4 +9,20 @@ class Item extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    function category(){
+        return $this->belongsTo('App\Models\Category');
+    }
+    function sub_category(){
+        return $this->belongsTo('App\Models\SubCategory');
+    }
+    function image(){
+        return $this->hasMany('App\Models\ItemImage');
+    }
+    function review(){
+        return $this->hasMany('App\Models\ItemReview');
+    }
+    function long_desc(){
+        return $this->hasOne('App\Models\ItemDescription');
+    }
 }
