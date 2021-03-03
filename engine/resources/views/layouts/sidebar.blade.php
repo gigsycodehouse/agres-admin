@@ -119,6 +119,18 @@
                                 <p>Product</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route('item_hot.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Product Hot Section</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('item_select.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Product Pilihan Section</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

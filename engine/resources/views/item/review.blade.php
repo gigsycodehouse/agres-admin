@@ -1,14 +1,8 @@
 @extends('layouts.master')
 @section('main_content')
 @push('css')
-    <style>
-        .width-200{
-            min-width: 200px;
-        }
-        .width-100{
-            min-width: 100px;
-        }
-    </style>
+<style>
+</style>
 @endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -16,12 +10,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Product Hot</h1>
-                    <a class="btn btn-primary mt-3" href="{{route('item_hot.create')}}">Add New Product Hot</a>
+                    <h1>Product</h1>
+                    {{-- <a class="btn btn-primary mt-3" href="{{route('item.create')}}">Add New Product</a> --}}
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Product Hot</li>
+                        <li class="breadcrumb-item active">Product</li>
                     </ol>
                 </div>
             </div>
@@ -44,30 +38,27 @@
                             <table class="table table-bordered table-striped ">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Product</th>
-                                        <th>Discount Price</th>
-                                        <th>End Discount Date</th>
-                                        <th></th>
+                                        <th style="max-width: 100px !important">No</th>
+                                        <th>Rating</th>
+                                        <th>Review</th>
+                                        {{-- <th></th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($items as $item)
+                                    @foreach ($item->review as $review)
                                     <tr>
-                                        <td>{{$loop->iteration}}</td>
-                                        <td><a href="{{route('item.show',$item->id)}}">{{$item->product->name ?? ''}}</a></td>
-                                        <td>{{$item->discount_price}}</td>
-                                        <td>{{$item->end_deal}}</td>
-                                        <td class="text-center width-200">
-                                            <a class="btn btn-warning"
-                                                href="{{route('item_hot.edit', $item->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$item->id}})">Delete</a>
-                                            <form method="POST" id="formdelete-{{$item->id}}"
-                                                action="{{route("item_hot.destroy",$item->id)}}">
-                                                @csrf
-                                                @method("delete")
-                                            </form>
-                                        </td>
+                                        <td style="max-width: 100px !important">{{$loop->iteration}}</td>
+                                        <td>{{$review->rating}}</a></td>
+                                        <td>{{$review->review}}</td>
+                                        {{-- <td class="text-center">
+                                            <a class="btn btn-warning" href="{{route('item.edit', $item->id)}}">Edit</a>
+                                        <a class="btn btn-danger" onclick="destroy({{$item->id}})">Delete</a>
+                                        <form method="POST" id="formdelete-{{$item->id}}"
+                                            action="{{route("item.destroy",$item->id)}}">
+                                            @csrf
+                                            @method("delete")
+                                        </form>
+                                        </td> --}}
                                     </tr>
                                     @endforeach
                                 </tbody>

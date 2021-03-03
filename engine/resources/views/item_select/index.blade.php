@@ -16,12 +16,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Product Hot</h1>
-                    <a class="btn btn-primary mt-3" href="{{route('item_hot.create')}}">Add New Product Hot</a>
+                    <h1>Product Pilihan</h1>
+                    <a class="btn btn-primary mt-3" href="{{route('item_select.create')}}">Add New Product Pilihan</a>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Product Hot</li>
+                        <li class="breadcrumb-item active">Product Pilihan</li>
                     </ol>
                 </div>
             </div>
@@ -60,10 +60,10 @@
                                         <td>{{$item->end_deal}}</td>
                                         <td class="text-center width-200">
                                             <a class="btn btn-warning"
-                                                href="{{route('item_hot.edit', $item->id)}}">Edit</a>
+                                                href="{{route('item_select.edit', $item->id)}}">Edit</a>
                                             <a class="btn btn-danger" onclick="destroy({{$item->id}})">Delete</a>
                                             <form method="POST" id="formdelete-{{$item->id}}"
-                                                action="{{route("item_hot.destroy",$item->id)}}">
+                                                action="{{route("item_select.destroy",$item->id)}}">
                                                 @csrf
                                                 @method("delete")
                                             </form>

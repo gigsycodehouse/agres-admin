@@ -1,6 +1,8 @@
 @extends('layouts.master')
 @section('main_content')
 @push('css')
+{{-- <link rel="stylesheet" href="{{asset('assets/dropzone/basic.min.css')}}"> --}}
+<link rel="stylesheet" href="{{asset('assets/dropzone/dropzone.min.css')}}">
 <style>
     .spesification {
         padding: 10px 15px;
@@ -100,11 +102,14 @@
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
+                                <div class="form-group">
+                                    <div class="dropzone" id="myDropzone"></div>
+                                </div>
                             </div>
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" id="submit-all" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -122,6 +127,50 @@
 <!-- /.content-wrapper -->
 @endsection
 @push('js')
+<script src="{{asset('assets/dropzone/dropzone.min.js')}}"></script>
+{{-- <script src="{{asset('assets/dropzone/dropzone-amd-module.min.js')}}"></script> --}}
+<script>
+    Dropzone.options.myDropzone= {
+        url: 'upload.php',
+        autoProcessQueue: false,
+        uploadMultiple: true,
+        parallelUploads: 5,
+        maxFiles: 5,
+        maxFilesize: 1,
+        acceptedFiles: 'image/*',
+        addRemoveLinks: true,
+        init: function() {
+            dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
+
+            // for Dropzone to process the queue (instead of default form behavior):
+            document.getElementById("submit-all").addEventListener("click", function(e) {
+                // Make sure that the form isn't actually being sent.
+                e.preventDefault();
+                e.stopPropagation();
+                dzClosure.processQueue();
+            });
+
+            //send all the form data along with the files:
+            this.on("sendingmultiple", function(data, xhr, formData) {
+                formData.append("firstname", jQuery("#firstname").val());
+                formData.append("lastname", jQuery("#lastname").val());
+            });
+
+            // $.getJSON('{{url('/')}}/item/get/1/image', function(data) {
+            //     $.each(data, function(index, val) {
+            //         var file = `{{url('/')}}/`+val.file
+            //         var mockFile = {
+            //             accepted: true            // required if using 'MaxFiles' option
+            //         };
+            //         dzClosure.files.push(mockFile);    // add to files array
+            //         dzClosure.emit("addedfile", mockFile);
+            //         dzClosure.emit("thumbnail", mockFile, file);
+            //         dzClosure.emit("complete", mockFile);
+            //     });
+            // });
+        }
+    }
+</script>
 <script>
     $('.select2').select2({
       theme: 'bootstrap4',

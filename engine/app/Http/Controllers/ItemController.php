@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\ItemImage;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
@@ -23,6 +24,7 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         $request->validate([
             'name' => 'required',
         ]);
@@ -41,6 +43,8 @@ class ItemController extends Controller
 
     public function show($id)
     {
+        $d['item'] = Item::with('category', 'sub_category', 'image', 'long_desc')->withCount('review')->where('id', $id)->first();
+        return view('item.show', $d);
     }
 
     public function edit($id)
@@ -75,5 +79,24 @@ class ItemController extends Controller
         $category = Item::find($id);
         $category->delete();
         return redirect()->back()->with(['success' => " delete category success"]);
+    }
+
+    public function updateStock(Request $request, $item_id)
+    {
+        $item = Item::find($item_id);
+        $item->stock = $request->stock;
+        $item->save();
+        return back()->with(['success' => "update stock success"]);
+    }
+
+    public function review($item_id)
+    {
+        $d['item'] = Item::with('review')->where('id', $item_id)->first();
+        return view('item.review',$d);
+    }
+    public function getImage($item_id)
+    {
+        $image = ItemImage::where('item_id', $item_id)->get();
+        return $image;
     }
 }

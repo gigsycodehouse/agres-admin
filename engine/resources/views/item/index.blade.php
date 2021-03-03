@@ -1,14 +1,15 @@
 @extends('layouts.master')
 @section('main_content')
 @push('css')
-    <style>
-        .width-200{
-            min-width: 200px;
-        }
-        .width-100{
-            min-width: 100px;
-        }
-    </style>
+<style>
+    .width-200 {
+        min-width: 200px;
+    }
+
+    .width-100 {
+        min-width: 100px;
+    }
+</style>
 @endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -64,31 +65,32 @@
                                     @foreach ($items as $item)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td class="width-100">{{$item->name}}</td>
+                                        <td class="width-100"><a href="{{route('item.show', $item->id)}}">{{$item->name}}</a></td>
                                         <td class="width-100">{{$item->price}}</td>
                                         <td class="width-100">{{$item->discount_price}}</td>
                                         <td class="width-100">{{$item->end_deal}}</td>
-                                        <td class="width-100">{{$item->stock}}</td>
+                                        <td class="width-100"><a href="#" data-toggle="modal" class="modal_stock"
+                                                data-item_id="{{$item->id}}" data-current_stock="{{$item->stock}}"
+                                                data-target="#update_stock">{{$item->stock}}</a></td>
                                         <td class="width-200">
                                             <ul>
-                                            @foreach (json_decode($item->spesification) as $k => $v)
+                                                @foreach (json_decode($item->spesification) as $k => $v)
                                                 <li>{{$k}} : {{$v}}</li>
                                                 @endforeach
                                             </ul>
                                         </td>
                                         <td class="width-100">{{$item->sub_category->name}}</td>
                                         <td class="width-100">{{$item->category->name}}</td>
-                                        <td class="width-100"><a href="">{{$item->review_count}}</a></td>
+                                        <td class="width-100"><a href="{{route('item.review', $item->id)}}">{{$item->review_count}}</a></td>
                                         <td class="width-100">{{$item->description}}</td>
                                         <td class="width-200">{{$item->long_desc->long_description ?? '-'}}</td>
                                         <td class="width-200">
                                             @foreach ($item->image as $image)
-                                                <img src="{{asset($image->file)}}" alt="">
+                                            <img src="{{asset($image->file)}}" alt="">
                                             @endforeach
                                         </td>
                                         <td class="text-center width-200">
-                                            <a class="btn btn-warning"
-                                                href="{{route('item.edit', $item->id)}}">Edit</a>
+                                            <a class="btn btn-warning" href="{{route('item.edit', $item->id)}}">Edit</a>
                                             <a class="btn btn-danger" onclick="destroy({{$item->id}})">Delete</a>
                                             <form method="POST" id="formdelete-{{$item->id}}"
                                                 action="{{route("item.destroy",$item->id)}}">
@@ -115,6 +117,35 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<div class="modal fade" id="update_stock">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Stock</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="" method="POST" id="form_update_stock">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="stock">Stock</label>
+                        <input type="text" name="stock" class="form-control" id="stock" placeholder="Product stock"
+                            value="">
+                        @error('stock')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 @push('js')
 <script>
@@ -145,6 +176,13 @@
             }
         })
     }
+    $('.modal_stock').click(function(){
+        var item_id = $(this).data('item_id')
+        var stock = $(this).data('current_stock')
+        var url = `{{url('/')}}/item/`+item_id+`/update_stock`
+        $('#form_update_stock').attr('action','').attr('action', url)
+        $('#stock').val('').val(stock)
+    })
 </script>
 
 @if ($message = Session::get('success'))

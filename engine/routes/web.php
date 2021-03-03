@@ -48,5 +48,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('sub_category', 'SubCategoryController');
 
     Route::resource('item', 'ItemController');
+    Route::post('item/{item_id}/update_stock', 'ItemController@updateStock')->name('item.update_stock');
+    Route::get('item/{item_id}/review', 'ItemController@review')->name('item.review');
     Route::resource('item_hot', 'ItemHotController');
+    Route::resource('item_select', 'ItemSelectController');
+
+    Route::post('item/get/{item_id}/image', 'ItemController@getImage')->name('item.upload_image');
+
+    Route::get('item/get/{item_id}/image', 'ItemController@getImage')->name('item.get_upload_image');
 });
