@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\ItemImage;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Image;
 
 class ItemController extends Controller
 {
@@ -24,7 +25,6 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $request->validate([
             'name' => 'required',
         ]);
@@ -38,6 +38,40 @@ class ItemController extends Controller
         $store->sub_category_id = $request->sub_category_id;
         $store->spesification = json_encode($request->spesification);
         $store->save();
+
+        if ($request->has('image')) {
+            foreach ($request->file('image') as $k => $v) {
+                // $imageName = $v->getClientOriginalName();
+                // $imageNewName =  uniqid() . '_' . $imageName;
+                // $destinationPath = 'assets/image/product/';
+                // $v->move($destinationPath, $imageNewName);
+                // $path_file =  $destinationPath . $imageNewName;
+
+                $imagePath = 'assets/image/product/';
+                $thumbnailPath = 'assets/image/product/thumbnail';
+                $imageName =  uniqid() . '_' . $v->getClientOriginalName();
+                $thumbnailName =  'thumbnail-'.$imageName;
+                if (!file_exists($imagePath)) {
+                    mkdir($imagePath, 0777, true);
+                }
+                if (!file_exists($thumbnailPath)) {
+                    mkdir($thumbnailPath, 0777, true);
+                }
+                $img = Image::make($v->path());
+                $img->resize(674, 674, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($imagePath.'/'.$imageName);
+
+                $img->resize(122, 122, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($thumbnailPath.'/'.$thumbnailName);
+
+                $image = new ItemImage;
+                $image->item_id = $store->id;
+                $image->file = $imagePath.'/'.$imageName;
+                $image->save();
+            }
+        }
         return redirect(route('item.index'))->with(['success' => " add new product success"]);
     }
 
@@ -57,6 +91,7 @@ class ItemController extends Controller
 
     public function update(Request $request, $id)
     {
+        dd($request->all());
         $request->validate([
             'name' => 'required',
         ]);
@@ -71,6 +106,51 @@ class ItemController extends Controller
         $update->spesification = json_encode($request->spesification);
         $update->save();
 
+        if ($request->has('image')) {
+            foreach ($request->image as $k => $v) {
+
+                // $image = $request->file('image');
+                // $input['imagename'] = time().'.'.$v->extension();
+
+                $imagePath = 'assets/image/product/';
+                $thumbnailPath = 'assets/image/product/thumbnail';
+                $imageName =  uniqid() . '_' . $v->getClientOriginalName();
+                $thumbnailName =  'thumbnail-'.$imageName;
+                if (!file_exists($imagePath)) {
+                    mkdir($imagePath, 0777, true);
+                }
+                if (!file_exists($thumbnailPath)) {
+                    mkdir($thumbnailPath, 0777, true);
+                }
+                $img = Image::make($v->path());
+                $img->resize(674, 674, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($imagePath.'/'.$imageName);
+
+                $img->resize(122, 122, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($thumbnailPath.'/'.$thumbnailName);
+
+                $image = new ItemImage;
+                $image->item_id = $store->id;
+                $image->file = $imagePath.'/'.$imageName;
+                $image->save();
+
+                // $destinationPath = 'assets/image/product/';
+                // $v->move($destinationPath, $imagename);
+
+                // $imageName = $v->getClientOriginalName();
+                // $imageNewName =  uniqid() . '_' . $imageName;
+                // $destinationPath = 'assets/image/product/';
+                // $v->move($destinationPath, $imageNewName);
+                // $path_file =  $destinationPath . $imageNewName;
+
+                // $image = new ItemImage;
+                // $image->item_id = $update->id;
+                // $image->file = $path_file;
+                // $image->save();
+            }
+        }
         return redirect(route('item.index'))->with(['success' => " update product $update->name success"]);
     }
 
@@ -92,7 +172,7 @@ class ItemController extends Controller
     public function review($item_id)
     {
         $d['item'] = Item::with('review')->where('id', $item_id)->first();
-        return view('item.review',$d);
+        return view('item.review', $d);
     }
     public function getImage($item_id)
     {

@@ -51,13 +51,13 @@
                                     @foreach ($member->address as $address)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$address->name}}</td>
-                                        <td>{{$address->phone}}</td>
-                                        <td>{{$address->address}}</td>
-                                        <td>{{$address->province->nm_propinsi}}</td>
-                                        <td>{{$address->city->nm_kota}}</td>
-                                        <td>{{$address->district->nm_kecamatan}}</td>
-                                        <td>{{$address->postal_code}}</td>
+                                        <td>{{$address->name ?? '-'}}</td>
+                                        <td>{{$address->phone ?? '-'}}</td>
+                                        <td>{{$address->address ?? '-'}}</td>
+                                        <td>{{$address->province->nm_propinsi ?? '-'}}</td>
+                                        <td>{{$address->city->nm_kota ?? '-'}}</td>
+                                        <td>{{$address->district->nm_kecamatan ?? '-'}}</td>
+                                        <td>{{$address->postal_code ?? '-'}}</td>
                                         <td class="text-center">
                                             <a class="btn btn-warning"
                                                 href="{{route('member_address.edit', ['member_id' => $member->id, 'address_id'=>$address->id])}}">Edit</a>

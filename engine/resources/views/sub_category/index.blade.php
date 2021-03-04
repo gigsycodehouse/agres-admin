@@ -45,7 +45,7 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$sub_category->name}}</td>
-                                        <td>{{$sub_category->category->name}}</td>
+                                        <td>{{$sub_category->category->name ?? '-'}}</td>
                                         <td class="text-center">
                                             <a class="btn btn-warning"
                                                 href="{{route('sub_category.edit', $sub_category->id)}}">Edit</a>

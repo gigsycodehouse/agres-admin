@@ -40,7 +40,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{route('item.store')}}">
+                        <form role="form" method="POST" action="{{route('item.store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
@@ -103,8 +103,12 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <div class="dropzone" id="myDropzone"></div>
+                                    <label for="spesification">Image</label>
+                                    <p>
+                                        <a href="#" id="addImage" class="btn btn-primary">Add Image</a>
+                                    </p>
                                 </div>
+                                <div id="images"></div>
                             </div>
                             <!-- /.card-body -->
 
@@ -112,6 +116,19 @@
                                 <button type="submit" id="submit-all" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
+
+                        {{-- <form role="form" method="POST" action="{{route('item.store')}}">
+                        @csrf
+                        <div class="card-body">
+                            <label for="spesification">Image</label>
+                            <div class="form-group">
+                                <div class="dropzone" id="myDropzone"></div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" id="submit-all" class="btn btn-primary">Upload Image</button>
+                        </div>
+                        </form> --}}
                     </div>
                     <!-- /.card -->
 
@@ -129,48 +146,59 @@
 @push('js')
 <script src="{{asset('assets/dropzone/dropzone.min.js')}}"></script>
 {{-- <script src="{{asset('assets/dropzone/dropzone-amd-module.min.js')}}"></script> --}}
-<script>
+{{-- <script>
     Dropzone.options.myDropzone= {
-        url: 'upload.php',
-        autoProcessQueue: false,
-        uploadMultiple: true,
-        parallelUploads: 5,
-        maxFiles: 5,
-        maxFilesize: 1,
-        acceptedFiles: 'image/*',
-        addRemoveLinks: true,
-        init: function() {
-            dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
+        url: "{{route('item.store')}}",
+paramName: "image",
+autoProcessQueue: false,
+uploadMultiple: true,
+parallelUploads: 5,
+// maxFiles: 5,
+// maxFilesize: 1,
+acceptedFiles: 'image/*',
+addRemoveLinks: true,
+headers: {
+'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+},
+init: function() {
+dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
 
-            // for Dropzone to process the queue (instead of default form behavior):
-            document.getElementById("submit-all").addEventListener("click", function(e) {
-                // Make sure that the form isn't actually being sent.
-                e.preventDefault();
-                e.stopPropagation();
-                dzClosure.processQueue();
-            });
+// for Dropzone to process the queue (instead of default form behavior):
+document.getElementById("submit-all").addEventListener("click", function(e) {
+// Make sure that the form isn't actually being sent.
+e.preventDefault();
+e.stopPropagation();
+dzClosure.processQueue();
+});
 
-            //send all the form data along with the files:
-            this.on("sendingmultiple", function(data, xhr, formData) {
-                formData.append("firstname", jQuery("#firstname").val());
-                formData.append("lastname", jQuery("#lastname").val());
-            });
+// send all the form data along with the files:
+this.on("sendingmultiple", function(data, xhr, formData) {
+formData.append("name", $("#name").val());
+formData.append("price", $("#price").val());
+formData.append("stock", $("#stock").val());
+formData.append("description", $("#description").val());
+formData.append("category_id", $("#category_id").val());
+formData.append("sub_category_id", $("#sub_category_id").val());
+$('.spec').each(function(){
+formData.append($(this).attr('name'), $(this).val());
+});
+});
 
-            // $.getJSON('{{url('/')}}/item/get/1/image', function(data) {
-            //     $.each(data, function(index, val) {
-            //         var file = `{{url('/')}}/`+val.file
-            //         var mockFile = {
-            //             accepted: true            // required if using 'MaxFiles' option
-            //         };
-            //         dzClosure.files.push(mockFile);    // add to files array
-            //         dzClosure.emit("addedfile", mockFile);
-            //         dzClosure.emit("thumbnail", mockFile, file);
-            //         dzClosure.emit("complete", mockFile);
-            //     });
-            // });
-        }
-    }
-</script>
+// $.getJSON('{{url('/')}}/item/get/1/image', function(data) {
+// $.each(data, function(index, val) {
+// var file = `{{url('/')}}/`+val.file
+// var mockFile = {
+// accepted: true // required if using 'MaxFiles' option
+// };
+// dzClosure.files.push(mockFile); // add to files array
+// dzClosure.emit("addedfile", mockFile);
+// dzClosure.emit("thumbnail", mockFile, file);
+// dzClosure.emit("complete", mockFile);
+// });
+// });
+}
+}
+</script> --}}
 <script>
     $('.select2').select2({
       theme: 'bootstrap4',
@@ -204,12 +232,70 @@
                     $('#spesification').append(`
                     <div class="col-12 d-inline">
                     <label>`+val+`</label>
-                    <input class="form-control" type="text" name="spesification[`+val+`]">
+                    <input class="form-control spec" type="text" name="spesification[`+val+`]">
                     </div>
                     `)
                 })
             }
         })
+    })
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader()
+            console.log(input)
+            var id = $(input).data('box_id')
+            console.log(id)
+
+            reader.onload = function(e) {
+                $('#imgReview-'+id).attr('src', e.target.result).css('padding', '10px')
+                $('#imgReviewThumb-'+id).attr('src', e.target.result).css('padding', '10px')
+            }
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#images").on("change", ".inputImage", function() {
+        readURL(this);
+    });
+
+    var i = 1;
+    $('#addImage').click(function(e){
+        e.preventDefault()
+        $('#images').append(
+        `
+        <div id="imagebox-`+i+`">
+        <div class="form-inline">
+            <div class="border rounded mr-2" style="height: 200px; width:200px" >
+                <img src="" alt="" id="imgReview-`+i+`" style="width: inherit; height: inherit">
+            </div>
+            <div class="border rounded" style="height: 100px; width:100px">
+                <img src="" alt="" id="imgReviewThumb-`+i+`" style="width: inherit; height: inherit">
+            </div>
+        </div>
+        <div class="form-group mt-2">
+            <div class="row">
+                <div class="col-10">
+                    <input type="file" name="image[]" class="form-control inputImage" data-box_id="`+i+`">
+                </div>
+                <div class="col-2">
+                    <a href="#" data-box_id="`+i+`" class="btn btn-danger deleteImage">Delete</a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div>
+        `)
+        i++
+    })
+
+    $("#images").on("click", ".deleteImage", function(e) {
+        e.preventDefault()
+
+        var box_id = $(this).data('box_id')
+        console.log(box_id)
+        $('#imagebox-'+box_id).remove()
     })
 </script>
 @endpush

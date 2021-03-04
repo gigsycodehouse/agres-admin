@@ -1,6 +1,8 @@
 @extends('layouts.master')
 @section('main_content')
 @push('css')
+<link rel="stylesheet" href="{{asset('assets/dropzone/basic.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/dropzone/dropzone.min.css')}}">
 <style>
     .spesification {
         padding: 10px 15px;
@@ -37,7 +39,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{route('item.update', $item->id)}}">
+                        <form role="form" method="POST" action="{{route('item.update', $item->id)}}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -104,7 +106,8 @@
                                         @foreach (json_decode($item->spesification) as $k => $v)
                                         <div class="col-12 d-inline">
                                             <label>{{$k}}</label>
-                                            <input class="form-control" type="text" name="spesification[{{$k}}]" value="{{$v}}">
+                                            <input class="form-control" type="text" name="spesification[{{$k}}]"
+                                                value="{{$v}}">
                                         </div>
                                         @endforeach
                                     </div>
@@ -112,11 +115,17 @@
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
+                                <div class="form-group">
+                                    <label for="spesification">Image</label>
+                                    <div class="form-group">
+                                        <div class="dropzone" id="myDropzone"></div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" id="submit-all" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -134,6 +143,64 @@
 <!-- /.content-wrapper -->
 @endsection
 @push('js')
+<script src="{{asset('assets/dropzone/dropzone.min.js')}}"></script>
+{{-- <script src="{{asset('assets/dropzone/dropzone-amd-module.min.js')}}"></script> --}}
+<script>
+    var update_url = `{{route('item.update', $item->id)}}`
+    var get_image_url = `{{route('item.get_upload_image', $item->id)}}`
+    Dropzone.options.myDropzone= {
+        method: "put",
+        url: update_url,
+        paramName: "image",
+        autoProcessQueue: false,
+        uploadMultiple: true,
+        parallelUploads: 5,
+        // maxFiles: 5,
+        // maxFilesize: 1,
+        acceptedFiles: 'image/*',
+        addRemoveLinks: true,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        init: function() {
+            dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
+
+            // for Dropzone to process the queue (instead of default form behavior):
+            document.getElementById("submit-all").addEventListener("click", function(e) {
+                // Make sure that the form isn't actually being sent.
+                e.preventDefault();
+                e.stopPropagation();
+                dzClosure.processQueue();
+            });
+
+            // send all the form data along with the files:
+            this.on("sendingmultiple", function(data, xhr, formData) {
+                formData.append("name", $("#name").val());
+                formData.append("price", $("#price").val());
+                formData.append("stock", $("#stock").val());
+                formData.append("description", $("#description").val());
+                formData.append("category_id", $("#category_id").val());
+                formData.append("sub_category_id", $("#sub_category_id").val());
+                $('.spec').each(function(){
+                    formData.append($(this).attr('name'), $(this).val());
+                });
+            });
+
+            $.getJSON(get_image_url, function(data) {
+                $.each(data, function(index, val) {
+                    var file = `{{url('/')}}/`+val.file
+                    var mockFile = {
+                        accepted: true            // required if using 'MaxFiles' option
+                    };
+                    dzClosure.files.push(mockFile);    // add to files array
+                    dzClosure.emit("addedfile", mockFile);
+                    dzClosure.emit("thumbnail", mockFile, file);
+                    dzClosure.emit("complete", mockFile);
+                });
+            });
+        }
+    }
+</script>
 <script>
     $('.select2').select2({
       theme: 'bootstrap4',
@@ -172,7 +239,7 @@
                     $('#spesification').append(`
                     <div class="col-12 d-inline">
                     <label>`+val+`</label>
-                    <input class="form-control" type="text" name="spesification[`+val+`]">
+                    <input class="form-control spec" type="text" name="spesification[`+val+`]">
                     </div>
                     `)
                 })
