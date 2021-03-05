@@ -39,7 +39,8 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{route('item.update', $item->id)}}" enctype="multipart/form-data">
+                        <form role="form" method="POST" action="{{route('item.update', $item->id)}}"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -117,16 +118,52 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="spesification">Image</label>
-                                    <div class="form-group">
-                                        <div class="dropzone" id="myDropzone"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
 
-                            <div class="card-footer">
-                                <button type="submit" id="submit-all" class="btn btn-primary">Submit</button>
-                            </div>
+                                    <input type="hidden" value="{{count($item->image)}}" id="countimage">
+                                </div>
+                                <div id="images">
+                                    @foreach ($item->image as $image)
+                                    <div id="imagebox-{{$loop->iteration}}">
+                                        <div class="form-inline">
+                                            <div class="border rounded mr-2" style="height: 200px; width:200px">
+                                                <img id="imgReview-{{$loop->iteration}}"
+                                                    src="{{asset($image->img_path.$image->img_name)}}"
+                                                    style="width: inherit; height: inherit">
+                                            </div>
+                                            <div class="border rounded" style="height: 100px; width:100px">
+                                                <img id="imgReviewThumb-{{$loop->iteration}}"
+                                                    src="{{asset($image->img_path.'thumbnail-'.$image->img_name)}}"
+                                                    style="width: inherit; height: inherit">
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <div class="row">
+                                                <div class="col-10">
+                                                    <input type="file" name="image[]" class="form-control inputImage"
+                                                        data-box_id="{{$loop->iteration}}">
+                                                </div>
+                                                <div class="col-2">
+                                                    <a href="#" data-image_id="{{$image->id}}"
+                                                        class="btn btn-danger serverDeleteImage">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    @endforeach
+                                </div>
+                                <p>
+                                    <a href="#" id="addImage" class="btn btn-primary">Add Image</a>
+                                </p>
+                                <!-- /.card-body -->
+
+                                <div class="card-footer">
+                                    <button type="submit" id="submit-all" class="btn btn-primary float-right">Submit</button>
+                                </div>
+                        </form>
+                        <form method="POST" id="formdelete" action="">
+                            @csrf
+                            @method("delete")
                         </form>
                     </div>
                     <!-- /.card -->
@@ -146,60 +183,60 @@
 <script src="{{asset('assets/dropzone/dropzone.min.js')}}"></script>
 {{-- <script src="{{asset('assets/dropzone/dropzone-amd-module.min.js')}}"></script> --}}
 <script>
-    var update_url = `{{route('item.update', $item->id)}}`
-    var get_image_url = `{{route('item.get_upload_image', $item->id)}}`
-    Dropzone.options.myDropzone= {
-        method: "put",
-        url: update_url,
-        paramName: "image",
-        autoProcessQueue: false,
-        uploadMultiple: true,
-        parallelUploads: 5,
-        // maxFiles: 5,
-        // maxFilesize: 1,
-        acceptedFiles: 'image/*',
-        addRemoveLinks: true,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        init: function() {
-            dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
+    // var update_url = `{{route('item.update', $item->id)}}`
+    // var get_image_url = `{{route('item.get_upload_image', $item->id)}}`
+    // Dropzone.options.myDropzone= {
+    //     method: "put",
+    //     url: update_url,
+    //     paramName: "image",
+    //     autoProcessQueue: false,
+    //     uploadMultiple: true,
+    //     parallelUploads: 5,
+    //     // maxFiles: 5,
+    //     // maxFilesize: 1,
+    //     acceptedFiles: 'image/*',
+    //     addRemoveLinks: true,
+    //     headers: {
+    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     },
+    //     init: function() {
+    //         dzClosure = this; // Makes sure that 'this' is understood inside the functions below.
 
-            // for Dropzone to process the queue (instead of default form behavior):
-            document.getElementById("submit-all").addEventListener("click", function(e) {
-                // Make sure that the form isn't actually being sent.
-                e.preventDefault();
-                e.stopPropagation();
-                dzClosure.processQueue();
-            });
+    //         // for Dropzone to process the queue (instead of default form behavior):
+    //         document.getElementById("submit-all").addEventListener("click", function(e) {
+    //             // Make sure that the form isn't actually being sent.
+    //             e.preventDefault();
+    //             e.stopPropagation();
+    //             dzClosure.processQueue();
+    //         });
 
-            // send all the form data along with the files:
-            this.on("sendingmultiple", function(data, xhr, formData) {
-                formData.append("name", $("#name").val());
-                formData.append("price", $("#price").val());
-                formData.append("stock", $("#stock").val());
-                formData.append("description", $("#description").val());
-                formData.append("category_id", $("#category_id").val());
-                formData.append("sub_category_id", $("#sub_category_id").val());
-                $('.spec').each(function(){
-                    formData.append($(this).attr('name'), $(this).val());
-                });
-            });
+    //         // send all the form data along with the files:
+    //         this.on("sendingmultiple", function(data, xhr, formData) {
+    //             formData.append("name", $("#name").val());
+    //             formData.append("price", $("#price").val());
+    //             formData.append("stock", $("#stock").val());
+    //             formData.append("description", $("#description").val());
+    //             formData.append("category_id", $("#category_id").val());
+    //             formData.append("sub_category_id", $("#sub_category_id").val());
+    //             $('.spec').each(function(){
+    //                 formData.append($(this).attr('name'), $(this).val());
+    //             });
+    //         });
 
-            $.getJSON(get_image_url, function(data) {
-                $.each(data, function(index, val) {
-                    var file = `{{url('/')}}/`+val.file
-                    var mockFile = {
-                        accepted: true            // required if using 'MaxFiles' option
-                    };
-                    dzClosure.files.push(mockFile);    // add to files array
-                    dzClosure.emit("addedfile", mockFile);
-                    dzClosure.emit("thumbnail", mockFile, file);
-                    dzClosure.emit("complete", mockFile);
-                });
-            });
-        }
-    }
+    //         $.getJSON(get_image_url, function(data) {
+    //             $.each(data, function(index, val) {
+    //                 var file = `{{url('/')}}/`+val.file
+    //                 var mockFile = {
+    //                     accepted: true            // required if using 'MaxFiles' option
+    //                 };
+    //                 dzClosure.files.push(mockFile);    // add to files array
+    //                 dzClosure.emit("addedfile", mockFile);
+    //                 dzClosure.emit("thumbnail", mockFile, file);
+    //                 dzClosure.emit("complete", mockFile);
+    //             });
+    //         });
+    //     }
+    // }
 </script>
 <script>
     $('.select2').select2({
@@ -247,5 +284,89 @@
         })
     })
 
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader()
+            console.log(input)
+            var id = $(input).data('box_id')
+            console.log(id)
+
+            reader.onload = function(e) {
+                $('#imgReview-'+id).attr('src', e.target.result).css('padding', '10px')
+                $('#imgReviewThumb-'+id).attr('src', e.target.result).css('padding', '10px')
+            }
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#images").on("change", ".inputImage", function() {
+        readURL(this);
+    });
+
+    var i = $('#countimage').val()
+    i++
+    console.log(i)
+    $('#addImage').click(function(e){
+        e.preventDefault()
+        $('#images').append(
+        `
+        <div id="imagebox-`+i+`">
+        <div class="form-inline">
+            <div class="border rounded mr-2" style="height: 200px; width:200px" >
+                <img src="" alt="" id="imgReview-`+i+`" style="width: inherit; height: inherit">
+            </div>
+            <div class="border rounded" style="height: 100px; width:100px">
+                <img src="" alt="" id="imgReviewThumb-`+i+`" style="width: inherit; height: inherit">
+            </div>
+        </div>
+        <div class="form-group mt-2">
+            <div class="row">
+                <div class="col-10">
+                    <input type="file" name="image[]" class="form-control inputImage" data-box_id="`+i+`">
+                </div>
+                <div class="col-2">
+                    <a href="#" data-box_id="`+i+`" class="btn btn-danger deleteImage">Delete</a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        `)
+        i++
+    })
+
+    $("#images").on("click", ".deleteImage", function(e) {
+        e.preventDefault()
+
+        var box_id = $(this).data('box_id')
+        $('#imagebox-'+box_id).remove()
+    })
+
+    $(".serverDeleteImage").click(function(e) {
+        e.preventDefault()
+        var image_id = $(this).data('image_id')
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value == true) {
+                action = `{{url('/')}}/item_image/`+image_id
+                $("#formdelete").attr('action', action).submit();
+            }
+        })
+    })
 </script>
+@if ($message = Session::get('success'))
+<script>
+    Toast.fire({
+        icon: 'success',
+        title: '  {{ $message }}'
+    })
+</script>
+@endif
 @endpush

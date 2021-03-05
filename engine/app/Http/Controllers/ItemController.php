@@ -48,27 +48,24 @@ class ItemController extends Controller
                 // $path_file =  $destinationPath . $imageNewName;
 
                 $imagePath = 'assets/image/product/';
-                $thumbnailPath = 'assets/image/product/thumbnail';
                 $imageName =  uniqid() . '_' . $v->getClientOriginalName();
                 $thumbnailName =  'thumbnail-'.$imageName;
                 if (!file_exists($imagePath)) {
                     mkdir($imagePath, 0777, true);
                 }
-                if (!file_exists($thumbnailPath)) {
-                    mkdir($thumbnailPath, 0777, true);
-                }
                 $img = Image::make($v->path());
                 $img->resize(674, 674, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($imagePath.'/'.$imageName);
+                })->save($imagePath.$imageName);
 
                 $img->resize(122, 122, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($thumbnailPath.'/'.$thumbnailName);
+                })->save($imagePath.$thumbnailName);
 
                 $image = new ItemImage;
                 $image->item_id = $store->id;
-                $image->file = $imagePath.'/'.$imageName;
+                $image->img_path = $imagePath;
+                $image->img_name = $imageName;
                 $image->save();
             }
         }
@@ -83,7 +80,7 @@ class ItemController extends Controller
 
     public function edit($id)
     {
-        $d['item'] = Item::find($id);
+        $d['item'] = Item::with('image')->where('id',$id)->first();
         $d['categories'] = Category::all();
         $d['sub_categories'] = SubCategory::where('category_id', $d['item']->category_id)->get();
         return view('item.edit', $d);
@@ -91,7 +88,6 @@ class ItemController extends Controller
 
     public function update(Request $request, $id)
     {
-        dd($request->all());
         $request->validate([
             'name' => 'required',
         ]);
@@ -108,47 +104,26 @@ class ItemController extends Controller
 
         if ($request->has('image')) {
             foreach ($request->image as $k => $v) {
-
-                // $image = $request->file('image');
-                // $input['imagename'] = time().'.'.$v->extension();
-
                 $imagePath = 'assets/image/product/';
-                $thumbnailPath = 'assets/image/product/thumbnail';
                 $imageName =  uniqid() . '_' . $v->getClientOriginalName();
                 $thumbnailName =  'thumbnail-'.$imageName;
                 if (!file_exists($imagePath)) {
                     mkdir($imagePath, 0777, true);
                 }
-                if (!file_exists($thumbnailPath)) {
-                    mkdir($thumbnailPath, 0777, true);
-                }
                 $img = Image::make($v->path());
                 $img->resize(674, 674, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($imagePath.'/'.$imageName);
+                })->save($imagePath.$imageName);
 
                 $img->resize(122, 122, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($thumbnailPath.'/'.$thumbnailName);
+                })->save($imagePath.$thumbnailName);
 
                 $image = new ItemImage;
-                $image->item_id = $store->id;
-                $image->file = $imagePath.'/'.$imageName;
+                $image->item_id = $update->id;
+                $image->img_path = $imagePath;
+                $image->img_name = $imageName;
                 $image->save();
-
-                // $destinationPath = 'assets/image/product/';
-                // $v->move($destinationPath, $imagename);
-
-                // $imageName = $v->getClientOriginalName();
-                // $imageNewName =  uniqid() . '_' . $imageName;
-                // $destinationPath = 'assets/image/product/';
-                // $v->move($destinationPath, $imageNewName);
-                // $path_file =  $destinationPath . $imageNewName;
-
-                // $image = new ItemImage;
-                // $image->item_id = $update->id;
-                // $image->file = $path_file;
-                // $image->save();
             }
         }
         return redirect(route('item.index'))->with(['success' => " update product $update->name success"]);
@@ -158,7 +133,7 @@ class ItemController extends Controller
     {
         $category = Item::find($id);
         $category->delete();
-        return redirect()->back()->with(['success' => " delete category success"]);
+        return back()->with(['success' => " delete category success"]);
     }
 
     public function updateStock(Request $request, $item_id)

@@ -104,16 +104,16 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="spesification">Image</label>
-                                    <p>
-                                        <a href="#" id="addImage" class="btn btn-primary">Add Image</a>
-                                    </p>
                                 </div>
                                 <div id="images"></div>
+                                <p>
+                                    <a href="#" id="addImage" class="btn btn-primary">Add Image</a>
+                                </p>
                             </div>
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" id="submit-all" class="btn btn-primary">Submit</button>
+                                <button type="submit" id="submit-all" class="btn btn-primary float-right">Submit</button>
                             </div>
                         </form>
 
@@ -285,7 +285,6 @@ formData.append($(this).attr('name'), $(this).val());
             </div>
         </div>
         <hr>
-        <div>
         `)
         i++
     })

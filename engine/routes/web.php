@@ -52,8 +52,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('item/{item_id}/review', 'ItemController@review')->name('item.review');
     Route::resource('item_hot', 'ItemHotController');
     Route::resource('item_select', 'ItemSelectController');
+    Route::resource('item_image', 'itemImageController');
 
+
+    // dropzone tidak berguna
     Route::post('item/get/{item_id}/image', 'ItemController@getImage')->name('item.upload_image');
-
     Route::get('item/get/{item_id}/image', 'ItemController@getImage')->name('item.get_upload_image');
 });

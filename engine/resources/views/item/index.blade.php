@@ -10,6 +10,7 @@
         min-width: 100px;
     }
 </style>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 @endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -85,9 +86,11 @@
                                         <td class="width-100">{{$item->description}}</td>
                                         <td class="width-200">{{$item->long_desc->long_description ?? '-'}}</td>
                                         <td class="width-200">
-                                            @foreach ($item->image as $image)
-                                            <img src="{{asset($image->file)}}" alt="">
-                                            @endforeach
+                                            <div id="imagecarousel">
+                                                @foreach ($item->image as $image)
+                                                <img src="{{asset($image->img_path.'thumbnail-'.$image->img_name)}}" alt="">
+                                                @endforeach
+                                            </div>
                                         </td>
                                         <td class="text-center width-200">
                                             <a class="btn btn-warning" href="{{route('item.edit', $item->id)}}">Edit</a>
@@ -148,7 +151,16 @@
 </div>
 @endsection
 @push('js')
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script>
+    // $(document).ready(function(){
+    //   $('#imagecarousel').slick({
+    //     dots: false,
+    //     autoplay: true,
+    //     autoplaySpeed: 2000,
+    //   });
+    // });
+
     const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
