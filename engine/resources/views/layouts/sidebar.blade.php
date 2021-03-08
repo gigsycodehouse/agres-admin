@@ -46,7 +46,13 @@
                         <li class="nav-item">
                             <a href="{{route('member.index')}}" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
-                                <p>Member</p>
+                                <p>Verified Member</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('member.unverified')}}" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Unverified Member</p>
                             </a>
                         </li>
                         <li class="nav-item">

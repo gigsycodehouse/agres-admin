@@ -11,7 +11,7 @@ class MemberController extends Controller
 {
     public function index()
     {
-        $d['members'] = Member::all();
+        $d['members'] = Member::where('email_verified_at','!=',null)->get();
         return view('member.index', $d);
     }
 
@@ -77,5 +77,19 @@ class MemberController extends Controller
         $name = $member->name;
         $member->delete();
         return redirect()->back()->with(['success' => " delete member $name success"]);
+    }
+
+    public function unverifiedAccount()
+    {
+        $d['members'] = Member::where('email_verified_at',null)->get();
+        return view('member.unverified', $d);
+    }
+
+    public function verifyAccount($member_id)
+    {
+        $member = Member::find($member_id);
+        $member->email_verified_at = Carbon::now();
+        $member->save();
+        return redirect(route('member.unverified'))->with(['success' => " verify member success"]);
     }
 }

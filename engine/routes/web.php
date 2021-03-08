@@ -28,6 +28,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('user', 'UserController');
     Route::resource('member', 'MemberController');
+    Route::get('member/unverified/get', 'MemberController@unverifiedAccount')->name('member.unverified');
+    Route::post('member/unverified/{member_id}/verify', 'MemberController@verifyAccount')->name('member.verify');
 
     Route::get('member_address/', 'MemberAddressController@index')->name('member_address.index');
     Route::get('member_address/{member_id}/show', 'MemberAddressController@show')->name('member_address.show');
