@@ -29,7 +29,8 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{route('sub_category.update', $sub_category->id)}}">
+                        <form role="form" method="POST" action="{{route('sub_category.update', $sub_category->id)}}"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -43,13 +44,37 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="category_id">Category</label>
-                                    <select class="form-control select2" name="category_id"
-                                        id="category_id">
+                                    <select class="form-control select2" name="category_id" id="category_id">
                                         @foreach ($categories as $category)
-                                        <option value="{{$category->id}}" @if ($category->id == $sub_category->category_id) selected @endif>{{$category->name}}</option>
+                                        <option value="{{$category->id}}" @if ($category->id ==
+                                            $sub_category->category_id) selected @endif>{{$category->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('category_id')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="icon">Icon</label>
+                                    <div>
+                                        <img src="{{asset($sub_category->icon)}}" alt="" id="imgreview"
+                                            style="max-width: 200px">
+                                    </div>
+                                    <input type="file" name="icon" class="form-control" id="icon"
+                                        value="{{old('name')}}">
+                                    @error('icon')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="banner">Banner</label>
+                                    <div>
+                                        <img src="{{asset($sub_category->banner)}}" alt="" id="imgreviewbanner"
+                                            style="max-width: 200px">
+                                    </div>
+                                    <input type="file" name="banner" class="form-control" id="banner"
+                                        value="{{old('name')}}">
+                                    @error('banner')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
@@ -80,5 +105,39 @@
       theme: 'bootstrap4',
       tags: true
     })
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imgreview').attr('src', e.target.result);
+                $('#imgreview').css('padding', '15px');
+            }
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#icon").change(function() {
+        readURL(this);
+    });
+
+    function readURLBanner(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imgreviewbanner').attr('src', e.target.result);
+                $('#imgreviewbanner').css('padding', '15px');
+            }
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#banner").change(function() {
+        readURLBanner(this);
+    });
 </script>
 @endpush

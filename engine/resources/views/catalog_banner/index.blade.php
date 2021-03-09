@@ -16,12 +16,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Sub Category</h1>
-                    <a class="btn btn-primary mt-3" href="{{route('sub_category.create')}}">Add New Sub Category</a>
+                    <h1>Catalog Banner</h1>
+                    <a class="btn btn-primary mt-3" href="{{route('catalog_banner.create')}}">Add New Banner</a>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Sub Category</li>
+                        <li class="breadcrumb-item"><a href="#">Cms</a></li>
+                        <li class="breadcrumb-item active">catalog banner</li>
                     </ol>
                 </div>
             </div>
@@ -45,27 +46,26 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Name</th>
                                         <th>Category</th>
-                                        <th>Icon</th>
-                                        <th>Banner</th>
+                                        <th>Banner Desktop</th>
+                                        <th>Banner Responsive</th>
+                                        <th>Url</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($sub_categories as $sub_category)
+                                    @foreach ($banners as $banner)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$sub_category->name}}</td>
-                                        <td>{{$sub_category->category->name ?? '-'}}</td>
-                                        <td><img src="{{asset($sub_category->icon)}}" alt=""></td>
-                                        <td><img src="{{asset($sub_category->banner)}}" alt=""></td>
+                                        <td>{{$banner->category->name ?? ''}}</td>
+                                        <td><img src="{{asset($banner->image_desktop)}}" alt=""></td>
+                                        <td><img src="{{asset($banner->image_responsive)}}" alt=""></td>
+                                        <td>{{$banner->url}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-warning"
-                                                href="{{route('sub_category.edit', $sub_category->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$sub_category->id}})">Delete</a>
-                                            <form method="POST" id="formdelete-{{$sub_category->id}}"
-                                                action="{{route("sub_category.destroy",$sub_category->id)}}">
+                                            <a class="btn btn-warning" href="{{route('catalog_banner.edit', $banner->id)}}">Edit</a>
+                                            <a class="btn btn-danger" onclick="destroy({{$banner->id}})">Delete</a>
+                                            <form method="POST" id="formdelete-{{$banner->id}}"
+                                                action="{{route("catalog_banner.destroy",$banner->id)}}">
                                                 @csrf
                                                 @method("delete")
                                             </form>
@@ -100,7 +100,7 @@
     });
     $( document ).ready(function() {
         $('.table').DataTable({
-            // "responsive": true,
+            "responsive": true,
             "autoWidth": false,
         });
     });

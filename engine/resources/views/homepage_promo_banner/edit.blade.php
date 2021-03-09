@@ -58,7 +58,7 @@
                                 <div class="form-group">
                                     <label for="file">File</label>
                                     <div>
-                                        <img src="{{asset($banner->file)}}" alt="">
+                                        <img src="{{asset($banner->file)}}" alt="" id="imgreview">
                                     </div>
                                     <input type="file" name="file" class="form-control" id="file">
                                     @error('file')
@@ -88,5 +88,21 @@
 @endsection
 @push('js')
 <script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imgreview').attr('src', e.target.result);
+                $('#imgreview').css('padding', '15px');
+            }
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#file").change(function() {
+        readURL(this);
+    });
 </script>
 @endpush

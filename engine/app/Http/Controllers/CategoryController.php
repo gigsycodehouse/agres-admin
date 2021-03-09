@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Image;
 
 class CategoryController extends Controller
 {
@@ -25,10 +26,26 @@ class CategoryController extends Controller
             'spesification' => 'required',
         ]);
 
-        Category::create([
+        $category = Category::create([
             'name' => $request->name,
             'spesification' => json_encode($request->spesification),
         ]);
+        if ($request->has('icon')) {
+            $file = $request->file('icon');
+            $imagePath = 'assets/images/category/';
+            $imageName =  uniqid() . '_' . $file->getClientOriginalName();
+            if (!file_exists($imagePath)) {
+                mkdir($imagePath, 0777, true);
+            }
+            $img = Image::make($file->path());
+
+            $img->resize(122, 122, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($imagePath.$imageName);
+
+            $category->icon = $imagePath.$imageName;
+        }
+        $category->save();
         return redirect(route('category.index'))->with(['success' => " add new category success"]);
     }
 
@@ -52,6 +69,21 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->name = $request->name;
         $category->spesification = json_encode($request->spesification);
+        if ($request->has('icon')) {
+            $file = $request->file('icon');
+            $imagePath = 'assets/images/category/';
+            $imageName =  uniqid() . '_' . $file->getClientOriginalName();
+            if (!file_exists($imagePath)) {
+                mkdir($imagePath, 0777, true);
+            }
+            $img = Image::make($file->path());
+
+            $img->resize(122, 122, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($imagePath.$imageName);
+
+            $category->icon = $imagePath.$imageName;
+        }
         $category->save();
 
         return redirect(route('category.index'))->with(['success' => " update category $category->name success"]);

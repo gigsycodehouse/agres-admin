@@ -96,6 +96,12 @@
                                 <p>Homepage Top Menu</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route('catalog_banner.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Catalog Banner</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item has-treeview">

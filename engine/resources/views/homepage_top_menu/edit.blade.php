@@ -1,9 +1,9 @@
 @extends('layouts.master')
 @section('main_content')
 @push('css')
-    <style>
+<style>
 
-    </style>
+</style>
 @endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -34,22 +34,23 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{route('homepage_top_menu.update', $menu->id)}}" enctype="multipart/form-data">
+                        <form role="form" method="POST" action="{{route('homepage_top_menu.update', $menu->id)}}"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name">Title</label>
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="Enter Title"
-                                        value="{{$menu->name}}">
+                                    <input type="text" name="name" class="form-control" id="name"
+                                        placeholder="Enter Title" value="{{$menu->name}}">
                                     @error('name')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Short Description</label>
-                                    <input type="text" name="description" class="form-control" id="description" placeholder="Short Descroption"
-                                        value="{{$menu->description}}">
+                                    <input type="text" name="description" class="form-control" id="description"
+                                        placeholder="Short Descroption" value="{{$menu->description}}">
                                     @error('description')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
@@ -73,7 +74,7 @@
                                 <div class="form-group">
                                     <label for="icon">Icon</label>
                                     <div>
-                                        <img src="{{asset($menu->icon)}}" alt="">
+                                        <img src="{{asset($menu->icon)}}" alt="" id="imgreview">
                                     </div>
                                     <input type="file" name="icon" class="form-control" id="icon">
                                     @error('icon')
@@ -103,5 +104,21 @@
 @endsection
 @push('js')
 <script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imgreview').attr('src', e.target.result);
+                $('#imgreview').css('padding', '15px');
+            }
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#icon").change(function() {
+        readURL(this);
+    });
 </script>
 @endpush

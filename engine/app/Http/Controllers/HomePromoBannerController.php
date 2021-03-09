@@ -28,7 +28,7 @@ class HomePromoBannerController extends Controller
             $file = $request->file('file');
             $imageName = $file->getClientOriginalName();
             $imageNewName =  uniqid() . '_' . $imageName;
-            $destinationPath = 'assets/cms/home/promo/';
+            $destinationPath = 'assets/images/cms/home/promo/';
             $file->move($destinationPath, $imageNewName);
             $path_file =  $destinationPath . $imageNewName;
 
@@ -61,7 +61,7 @@ class HomePromoBannerController extends Controller
             $file = $request->file('file');
             $imageName = $file->getClientOriginalName();
             $imageNewName =  uniqid() . '_' . $imageName;
-            $destinationPath = 'assets/cms/home/promo/';
+            $destinationPath = 'assets/images/cms/home/promo/';
             $file->move($destinationPath, $imageNewName);
             $path_file =  $destinationPath . $imageNewName;
 

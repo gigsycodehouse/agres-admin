@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('member_address/{member_id}/destroy/{address_id}', 'MemberAddressController@destroy')->name('member_address.destroy');
 
     Route::resource('homepage_banner', 'HomeBannerController');
+    Route::resource('catalog_banner', 'CatalogBannerController');
     Route::resource('homepage_bottom_menu', 'HomeBottomMenuController');
     Route::resource('homepage_top_menu', 'HomeTopMenuController');
     Route::resource('homepage_promo_banner', 'HomePromoBannerController');

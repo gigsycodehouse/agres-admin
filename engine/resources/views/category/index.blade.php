@@ -1,5 +1,15 @@
 @extends('layouts.master')
 @section('main_content')
+@push('css')
+    <style>
+        td {
+            max-width: 200px;
+        }
+        td img {
+            max-width: inherit;
+        }
+    </style>
+@endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -37,6 +47,7 @@
                                         <th>No</th>
                                         <th>Name</th>
                                         <th>Spesification</th>
+                                        <th>Icon</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -54,6 +65,7 @@
                                             </ul>
                                             @endforeach
                                         </td>
+                                        <td><img src="{{asset($category->icon)}}" alt=""></td>
                                         <td class="text-center">
                                             <a class="btn btn-warning"
                                                 href="{{route('category.edit', $category->id)}}">Edit</a>

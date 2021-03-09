@@ -29,7 +29,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{route('category.update', $category->id)}}">
+                        <form role="form" method="POST" action="{{route('category.update', $category->id)}}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -50,6 +50,17 @@
                                         @endforeach
                                     </select>
                                     @error('spesification')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="icon">Icon</label>
+                                    <div>
+                                        <img src="{{asset($category->icon)}}" alt="" id="imgreview" style="max-width: 200px">
+                                    </div>
+                                    <input type="file" name="icon" class="form-control" id="icon"
+                                        value="{{old('name')}}">
+                                    @error('icon')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
@@ -80,5 +91,22 @@
       theme: 'bootstrap4',
       tags: true
     })
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imgreview').attr('src', e.target.result);
+                $('#imgreview').css('padding', '15px');
+            }
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#icon").change(function() {
+        readURL(this);
+    });
 </script>
 @endpush

@@ -30,7 +30,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" method="POST" action="{{route('sub_category.store')}}">
+                        <form role="form" method="POST" action="{{route('sub_category.store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
@@ -50,6 +50,28 @@
                                         @endforeach
                                     </select>
                                     @error('category_id')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="icon">Icon</label>
+                                    <div>
+                                        <img src="" alt="" id="imgreview" style="max-width: 200px">
+                                    </div>
+                                    <input type="file" name="icon" class="form-control" id="icon"
+                                        value="{{old('name')}}">
+                                    @error('icon')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="banner">Banner</label>
+                                    <div>
+                                        <img src="" alt="" id="imgreviewbanner" style="max-width: 200px">
+                                    </div>
+                                    <input type="file" name="banner" class="form-control" id="banner"
+                                        value="{{old('name')}}">
+                                    @error('banner')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
@@ -79,5 +101,39 @@
     $('.select2').select2({
       theme: 'bootstrap4',
     })
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imgreview').attr('src', e.target.result);
+                $('#imgreview').css('padding', '15px');
+            }
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#icon").change(function() {
+        readURL(this);
+    });
+
+    function readURLBanner(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imgreviewbanner').attr('src', e.target.result);
+                $('#imgreviewbanner').css('padding', '15px');
+            }
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#banner").change(function() {
+        readURLBanner(this);
+    });
 </script>
 @endpush

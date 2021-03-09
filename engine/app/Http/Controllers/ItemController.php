@@ -47,7 +47,7 @@ class ItemController extends Controller
                 // $v->move($destinationPath, $imageNewName);
                 // $path_file =  $destinationPath . $imageNewName;
 
-                $imagePath = 'assets/image/product/';
+                $imagePath = 'assets/images/product/';
                 $imageName =  uniqid() . '_' . $v->getClientOriginalName();
                 $thumbnailName =  'thumbnail-'.$imageName;
                 if (!file_exists($imagePath)) {
@@ -104,7 +104,7 @@ class ItemController extends Controller
 
         if ($request->has('image')) {
             foreach ($request->image as $k => $v) {
-                $imagePath = 'assets/image/product/';
+                $imagePath = 'assets/images/product/';
                 $imageName =  uniqid() . '_' . $v->getClientOriginalName();
                 $thumbnailName =  'thumbnail-'.$imageName;
                 if (!file_exists($imagePath)) {

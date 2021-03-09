@@ -40,7 +40,7 @@
                                 <div class="form-group">
                                     <label for="image_desktop">Image Desktop</label>
                                     <div>
-                                        <img src="{{asset($banner->image_desktop)}}" alt="">
+                                        <img src="{{asset($banner->image_desktop)}}" alt="" id="imgreview">
                                     </div>
                                     <input type="file" name="image_desktop" class="form-control" id="image_desktop">
                                     @error('image_desktop')
@@ -50,7 +50,7 @@
                                 <div class="form-group">
                                     <label for="image_responsive">Image Responsive</label>
                                     <div>
-                                        <img src="{{asset($banner->image_responsive)}}" alt="">
+                                        <img src="{{asset($banner->image_responsive)}}" alt="" id="imgreview1">
                                     </div>
                                     <input type="file" name="image_responsive" class="form-control"
                                         id="image_responsive">
@@ -89,5 +89,38 @@
 @endsection
 @push('js')
 <script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imgreview').attr('src', e.target.result);
+                $('#imgreview').css('padding', '15px');
+            }
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#image_desktop").change(function() {
+        readURL(this);
+    });
+
+    function readURL1(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imgreview1').attr('src', e.target.result);
+                $('#imgreview1').css('padding', '15px');
+            }
+
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#image_responsive").change(function() {
+        readURL1(this);
+    });
 </script>
 @endpush

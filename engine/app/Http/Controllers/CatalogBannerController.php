@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CmsHomepageBanner;
+use App\Models\Category;
+use App\Models\CmsCatalogBanner;
 use Illuminate\Http\Request;
 
-class HomeBannerController extends Controller
+class CatalogBannerController extends Controller
 {
     public function index()
     {
-        $d['banners'] = CmsHomepageBanner::all();
-        return view('homepage_banner.index', $d);
+        $d['banners'] = CmsCatalogBanner::all();
+        return view('catalog_banner.index', $d);
     }
 
     public function create()
     {
-        return view('homepage_banner.create');
+        $d['categories'] = Category::all();
+        return view('catalog_banner.create', $d);
     }
 
     public function store(Request $request)
@@ -25,22 +27,23 @@ class HomeBannerController extends Controller
             'image_responsive' => 'required',
         ]);
 
-        $store = new CmsHomepageBanner;
-        $store->url = $request->url;
-        foreach ($request->all() as $i => $v) {
+        $store = new CmsCatalogBanner;
+        foreach ($request->except('_token','_method') as $i => $v) {
             if ($i == 'image_desktop' || $i == 'image_responsive') {
                 $imageName = $v->getClientOriginalName();
                 $imageNewName =  uniqid() . '_' . $imageName;
-                $destinationPath = 'assets/images/cms/home/';
+                $destinationPath = 'assets/images/cms/catalog/';
                 $v->move($destinationPath, $imageNewName);
                 $path_file =  $destinationPath . $imageNewName;
 
                 $store->$i = $path_file;
+            } else {
+                $store->$i = $v;
             }
         }
         $store->save();
 
-        return redirect(route('homepage_banner.index'))->with(['success' => " add homepage banner success"]);
+        return redirect(route('catalog_banner.index'))->with(['success' => "add banner success"]);
     }
 
     public function show($id)
@@ -49,35 +52,36 @@ class HomeBannerController extends Controller
 
     public function edit($id)
     {
-        $d['banner'] = CmsHomepageBanner::find($id);
-        return view('homepage_banner.edit', $d);
+        $d['banner'] = CmsCatalogBanner::find($id);
+        $d['categories'] = Category::all();
+        return view('catalog_banner.edit', $d);
     }
 
     public function update(Request $request, $id)
     {
-        $store = CmsHomepageBanner::find($id);
-        $store->url = $request->url;
+        $update = CmsCatalogBanner::find($id);
         foreach ($request->except('_token','_method') as $i => $v) {
-            if (($i == 'image_desktop' && $v != null) || ($i == 'image_responsive' && $v != null)) {
+            if ($i == 'image_desktop' || $i == 'image_responsive') {
                 $imageName = $v->getClientOriginalName();
                 $imageNewName =  uniqid() . '_' . $imageName;
-                $destinationPath = 'assets/images/cms/home/';
+                $destinationPath = 'assets/images/cms/catalog/';
                 $v->move($destinationPath, $imageNewName);
                 $path_file =  $destinationPath . $imageNewName;
 
-                $store->$i = $path_file;
+                $update->$i = $path_file;
+            } else {
+                $update->$i = $v;
             }
         }
-        $store->save();
+        $update->save();
 
-        return redirect(route('homepage_banner.index'))->with(['success' => " update homepage banner success"]);
+        return redirect(route('catalog_banner.index'))->with(['success' => "update banner success"]);
     }
 
     public function destroy($id)
     {
-        $member = CmsHomepageBanner::find($id);
-        $name = $member->name;
+        $member = CmsCatalogBanner::find($id);
         $member->delete();
-        return redirect()->back()->with(['success' => " delete homepage banner success"]);
+        return redirect()->back()->with(['success' => "delete banner success"]);
     }
 }
