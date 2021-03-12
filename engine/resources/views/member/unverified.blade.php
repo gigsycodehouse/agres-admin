@@ -49,12 +49,26 @@
                                         <td>{{$member->phone}}</td>
                                         <td>{{$member->email}}</td>
                                         <td class="text-center">
-                                            <form method="POST" action="{{route("member.verify",$member->id)}}">
+                                            <a class="nav-link dropdown-toggle btn btn-primary" style="display: unset" data-toggle="dropdown" href="#">
+                                                Menu <span class="caret"></span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" tabindex="-1"
+                                                    href="{{route('member.edit', $member->id)}}">Edit</a>
+                                                <a class="dropdown-item" tabindex="-1" href="#"
+                                                    onclick="destroy({{$member->id}})">Delete</a>
+                                                <form method="POST" action="{{route("member.verify",$member->id)}}">
+                                                    @csrf
+                                                    <button class="dropdown-item" type="submit">Verify</button>
+                                                </form>
+                                            </div>
+                                            {{-- <form method="POST" action="{{route("member.verify",$member->id)}}">
                                                 @csrf
                                                 <button type="submit" class="btn btn-primary">Verify</button>
                                             </form>
-                                            <a class="btn btn-warning" href="{{route('member.edit', $member->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$member->id}})">Delete</a>
+                                            <a class="btn btn-warning"
+                                                href="{{route('member.edit', $member->id)}}">Edit</a>
+                                            <a class="btn btn-danger" onclick="destroy({{$member->id}})">Delete</a> --}}
                                             <form method="POST" id="formdelete-{{$member->id}}"
                                                 action="{{route("member.destroy",$member->id)}}">
                                                 @csrf

@@ -62,7 +62,24 @@
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->role->name ?? '-'}}</td>
                                         <td class="text-center">
-                                            @if ($user->role_id == 1)
+                                            <a class="nav-link dropdown-toggle btn btn-primary" style="display: unset" data-toggle="dropdown" href="#">
+                                                Menu <span class="caret"></span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                @if ($user->role_id ==1)
+                                                <a class="dropdown-item" tabindex="-1"
+                                                    onclick="updateRole({{$user->id}}, 2)" href="#">Make as sub
+                                                    Admin</a>
+                                                @else
+                                                <a class="dropdown-item" onclick="updateRole({{$user->id}}, 1)"
+                                                    href="#">Make as Admin</a>
+                                                @endif
+                                                <a class="dropdown-item" tabindex="-1"
+                                                    href="{{route('user.edit', $user->id)}}">Edit</a>
+                                                <a class="dropdown-item" tabindex="-1" href="#"
+                                                    onclick="destroy({{$user->id}})">Delete</a>
+                                            </div>
+                                            {{-- @if ($user->role_id == 1)
                                             <a class="btn btn-primary" onclick="updateRole({{$user->id}}, 2)"
                                                 href="#">Make as sub Admin</a>
                                             @else
@@ -70,7 +87,7 @@
                                                 href="#">Make as Admin</a>
                                             @endif
                                             <a class="btn btn-warning" href="{{route('user.edit', $user->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$user->id}})">Delete</a>
+                                            <a class="btn btn-danger" onclick="destroy({{$user->id}})">Delete</a> --}}
                                             <form method="POST" id="formdelete-{{$user->id}}"
                                                 action="{{route("user.destroy",$user->id)}}">
                                                 @csrf

@@ -1,14 +1,15 @@
 @extends('layouts.master')
 @section('main_content')
 @push('css')
-    <style>
-        .width-200{
-            min-width: 200px;
-        }
-        .width-100{
-            min-width: 100px;
-        }
-    </style>
+<style>
+    .width-200 {
+        min-width: 200px;
+    }
+
+    .width-100 {
+        min-width: 100px;
+    }
+</style>
 @endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -55,13 +56,21 @@
                                     @foreach ($items as $item)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td><a href="{{route('item.show',$item->id)}}">{{$item->product->name ?? ''}}</a></td>
+                                        <td><a
+                                                href="{{route('item.show',$item->id)}}">{{$item->product->name ?? ''}}</a>
+                                        </td>
                                         <td>{{$item->discount_price}}</td>
                                         <td>{{$item->end_deal}}</td>
                                         <td class="text-center width-200">
-                                            <a class="btn btn-warning"
-                                                href="{{route('item_hot.edit', $item->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$item->id}})">Delete</a>
+                                            <a class="nav-link dropdown-toggle btn btn-primary" style="display: unset" data-toggle="dropdown" href="#">
+                                                Menu <span class="caret"></span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" tabindex="-1"
+                                                    href="{{route('item_hot.edit', $item->id)}}">Edit</a>
+                                                <a class="dropdown-item" tabindex="-1" href="#"
+                                                    onclick="destroy({{$item->id}})">Delete</a>
+                                            </div>
                                             <form method="POST" id="formdelete-{{$item->id}}"
                                                 action="{{route("item_hot.destroy",$item->id)}}">
                                                 @csrf

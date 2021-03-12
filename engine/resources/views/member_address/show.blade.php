@@ -59,9 +59,18 @@
                                         <td>{{$address->district->nm_kecamatan ?? '-'}}</td>
                                         <td>{{$address->postal_code ?? '-'}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-warning"
+                                            <a class="nav-link dropdown-toggle btn btn-primary" style="display: unset" data-toggle="dropdown" href="#">
+                                                Menu <span class="caret"></span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" tabindex="-1"
+                                                    href="{{route('member_address.edit', ['member_id' => $member->id, 'address_id'=>$address->id])}}">Edit</a>
+                                                <a class="dropdown-item" tabindex="-1" href="#"
+                                                    onclick="destroy({{$address->id}})">Delete</a>
+                                            </div>
+                                            {{-- <a class="btn btn-warning"
                                                 href="{{route('member_address.edit', ['member_id' => $member->id, 'address_id'=>$address->id])}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$address->id}})">Delete</a>
+                                            <a class="btn btn-danger" onclick="destroy({{$address->id}})">Delete</a> --}}
                                             <form method="POST" id="formdelete-{{$address->id}}"
                                                 action="{{route("member_address.destroy",['member_id' => $member->id, 'address_id'=>$address->id])}}">
                                                 @csrf

@@ -1,14 +1,15 @@
 @extends('layouts.master')
 @section('main_content')
 @push('css')
-    <style>
-        td {
-            max-width: 200px;
-        }
-        td img {
-            max-width: inherit;
-        }
-    </style>
+<style>
+    td {
+        max-width: 200px;
+    }
+
+    td img {
+        max-width: inherit;
+    }
+</style>
 @endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -64,8 +65,15 @@
                                         <td>{{$menu->order}}</td>
                                         <td><img src="{{asset($menu->icon)}}" alt=""></td>
                                         <td class="text-center">
-                                            <a class="btn btn-warning" href="{{route('homepage_top_menu.edit', $menu->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$menu->id}})">Delete</a>
+                                            <a class="nav-link dropdown-toggle btn btn-primary" style="display: unset" data-toggle="dropdown" href="#">
+                                                Menu <span class="caret"></span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" tabindex="-1"
+                                                    href="{{route('homepage_top_menu.edit', $menu->id)}}">Edit</a>
+                                                <a class="dropdown-item" tabindex="-1" href="#"
+                                                    onclick="destroy({{$menu->id}})">Delete</a>
+                                            </div>
                                             <form method="POST" id="formdelete-{{$menu->id}}"
                                                 action="{{route("homepage_top_menu.destroy",$menu->id)}}">
                                                 @csrf

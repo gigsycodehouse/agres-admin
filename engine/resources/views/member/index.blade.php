@@ -49,8 +49,15 @@
                                         <td>{{$member->phone}}</td>
                                         <td>{{$member->email}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-warning" href="{{route('member.edit', $member->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$member->id}})">Delete</a>
+                                            <a class="nav-link dropdown-toggle btn btn-primary" style="display: unset" data-toggle="dropdown" href="#">
+                                                Menu <span class="caret"></span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" tabindex="-1"
+                                                    href="{{route('member.edit', $member->id)}}">Edit</a>
+                                                <a class="dropdown-item" tabindex="-1" href="#"
+                                                    onclick="destroy({{$member->id}})">Delete</a>
+                                            </div>
                                             <form method="POST" id="formdelete-{{$member->id}}"
                                                 action="{{route("member.destroy",$member->id)}}">
                                                 @csrf

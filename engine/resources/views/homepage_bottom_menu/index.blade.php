@@ -1,14 +1,15 @@
 @extends('layouts.master')
 @section('main_content')
 @push('css')
-    <style>
-        td {
-            max-width: 200px;
-        }
-        td img {
-            max-width: inherit;
-        }
-    </style>
+<style>
+    td {
+        max-width: 200px;
+    }
+
+    td img {
+        max-width: inherit;
+    }
+</style>
 @endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -17,7 +18,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>Homepage Bottom Menu</h1>
-                    <a class="btn btn-primary mt-3" href="{{route('homepage_bottom_menu.create')}}">Add New Bottom Menu</a>
+                    <a class="btn btn-primary mt-3" href="{{route('homepage_bottom_menu.create')}}">Add New Bottom
+                        Menu</a>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -64,8 +66,15 @@
                                         <td>{{$menu->order}}</td>
                                         <td><img src="{{asset($menu->icon)}}" alt=""></td>
                                         <td class="text-center">
-                                            <a class="btn btn-warning" href="{{route('homepage_bottom_menu.edit', $menu->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$menu->id}})">Delete</a>
+                                            <a class="nav-link dropdown-toggle btn btn-primary" style="display: unset" data-toggle="dropdown" href="#">
+                                                Menu <span class="caret"></span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" tabindex="-1"
+                                                    href="{{route('homepage_bottom_menu.edit', $menu->id)}}">Edit</a>
+                                                <a class="dropdown-item" tabindex="-1" href="#"
+                                                    onclick="destroy({{$menu->id}})">Delete</a>
+                                            </div>
                                             <form method="POST" id="formdelete-{{$menu->id}}"
                                                 action="{{route("homepage_bottom_menu.destroy",$menu->id)}}">
                                                 @csrf

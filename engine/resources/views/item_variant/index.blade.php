@@ -57,9 +57,15 @@
                                         data-current_stock="{{$variant->stock}}"
                                         data-target="#update_stock">{{$variant->stock}}</a></td> --}}
                                         <td class="text-center">
-                                            <a class="btn btn-warning"
-                                                href="{{route('variant.edit', ['item_id' => $item->id, 'variant_id'=>$variant->id])}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$variant->id}})">Delete</a>
+                                            <a class="nav-link dropdown-toggle btn btn-primary" style="display: unset" data-toggle="dropdown"
+                                                href="#">Menu<span class="caret"></span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" tabindex="-1"
+                                                    href="{{route('variant.edit', ['item_id' => $item->id, 'variant_id'=>$variant->id])}}">Edit</a>
+                                                <a class="dropdown-item" tabindex="-1" href="#"
+                                                    onclick="destroy({{$variant->id}})">Delete</a>
+                                            </div>
                                             <form method="POST" id="formdelete-{{$variant->id}}"
                                                 action="{{route("variant.destroy",['item_id' => $item->id, 'variant_id'=>$variant->id])}}">
                                                 @csrf

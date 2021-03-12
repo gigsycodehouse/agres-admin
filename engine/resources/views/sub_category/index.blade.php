@@ -1,14 +1,15 @@
 @extends('layouts.master')
 @section('main_content')
 @push('css')
-    <style>
-        td {
-            max-width: 200px;
-        }
-        td img {
-            max-width: inherit;
-        }
-    </style>
+<style>
+    td {
+        max-width: 200px;
+    }
+
+    td img {
+        max-width: inherit;
+    }
+</style>
 @endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -61,9 +62,19 @@
                                         <td><img src="{{asset($sub_category->icon)}}" alt=""></td>
                                         <td><img src="{{asset($sub_category->banner)}}" alt=""></td>
                                         <td class="text-center">
-                                            <a class="btn btn-warning"
+                                            <a class="nav-link dropdown-toggle btn btn-primary" style="display: unset" data-toggle="dropdown" href="#">
+                                                Menu <span class="caret"></span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" tabindex="-1"
+                                                    href="{{route('sub_category.edit', $sub_category->id)}}">Edit</a>
+                                                <a class="dropdown-item" tabindex="-1" href="#"
+                                                    onclick="destroy({{$sub_category->id}})">Delete</a>
+                                            </div>
+                                            {{-- <a class="btn btn-warning"
                                                 href="{{route('sub_category.edit', $sub_category->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$sub_category->id}})">Delete</a>
+                                            <a class="btn btn-danger"
+                                                onclick="destroy({{$sub_category->id}})">Delete</a> --}}
                                             <form method="POST" id="formdelete-{{$sub_category->id}}"
                                                 action="{{route("sub_category.destroy",$sub_category->id)}}">
                                                 @csrf

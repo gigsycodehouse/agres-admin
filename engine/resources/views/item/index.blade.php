@@ -105,8 +105,15 @@
                                             </div>
                                         </td>
                                         <td class="text-center width-200">
-                                            <a class="btn btn-warning" href="{{route('item.edit', $item->id)}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$item->id}})">Delete</a>
+                                            <a class="nav-link dropdown-toggle btn btn-primary" style="display: unset" data-toggle="dropdown" href="#">
+                                                Menu <span class="caret"></span>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" tabindex="-1"
+                                                    href="{{route('item.edit', $item->id)}}">Edit</a>
+                                                <a class="dropdown-item" tabindex="-1" href="#"
+                                                    onclick="destroy({{$item->id}})">Delete</a>
+                                            </div>
                                             <form method="POST" id="formdelete-{{$item->id}}"
                                                 action="{{route("item.destroy",$item->id)}}">
                                                 @csrf
