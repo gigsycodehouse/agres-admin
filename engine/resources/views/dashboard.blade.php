@@ -7,12 +7,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Starter Page</h1>
+                    <h1 class="m-0 text-dark">Dashboard</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Starter Page</li>
+                        <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -41,44 +40,62 @@
                     </div>
 
                     <div class="card card-primary card-outline">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-
-                            <p class="card-text">
-                                Some quick example text to build on the card title and make up the bulk of the
-                                card's
-                                content.
-                            </p>
-                            <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a>
+                        <div class="card-header">
+                            <h5 class="m-0">Stock Product</h5>
                         </div>
-                    </div><!-- /.card -->
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Product</th>
+                                        <th>Variant</th>
+                                        <th>Stock</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($variant_stocks as $variant_stock)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$variant_stock->Product->name}}</td>
+                                        <td>{{$variant_stock->variant}}</td>
+                                        <td>{{$variant_stock->stock}}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.col-md-6 -->
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="m-0">Featured</h5>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="card-title">Special title treatment</h6>
-
-                            <p class="card-text">With supporting text below as a natural lead-in to additional
-                                content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                            <h5 class="m-0">Featured</h5>
+                            <h5 class="m-0">New Member</h5>
                         </div>
                         <div class="card-body">
-                            <h6 class="card-title">Special title treatment</h6>
-
-                            <p class="card-text">With supporting text below as a natural lead-in to additional
-                                content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Joined</th>
+                                        <th>Name</th>
+                                        <th>phone</th>
+                                        <th>email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($members as $members)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$members->joined_at}}</td>
+                                        <td>{{$members->name}}</td>
+                                        <td>{{$members->phone}}</td>
+                                        <td>{{$members->email}}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -101,3 +118,13 @@
 </aside>
 <!-- /.control-sidebar -->
 @endsection
+@push('js')
+<script>
+    $( document ).ready(function() {
+        $('.table').DataTable({
+            "scrollX": true,
+            "autoWidth": false,
+        });
+    });
+</script>
+@endpush

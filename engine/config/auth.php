@@ -46,6 +46,10 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        'subAdmin'=>[
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*

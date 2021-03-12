@@ -18,8 +18,12 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', function () {
-        return view('dashboard');
+    Route::get('/', 'DashboardController@index');
+
+    Route::group(['middleware' => ['admin']], function () {
+        Route::get('/admin', function () {
+            dd('aa');
+        });
     });
     Route::get('get/{category_id}/spesification', 'Controller@getSpesification')->name('get.subcategory');
     Route::get('get/{category_id}/sub_category', 'Controller@getSubCategory')->name('get.subcategory');
@@ -27,6 +31,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('get/{city_id}/districts', 'Controller@getDistricts')->name('get.district');
 
     Route::resource('user', 'UserController');
+    Route::post('user/{user_id}/updaterole', 'UserController@updateRole')->name('user.updaterole');
+    Route::post('user/{user_id}/updatestatus', 'UserController@updateStatus')->name('user.updatestatus');
     Route::resource('member', 'MemberController');
     Route::get('member/unverified/get', 'MemberController@unverifiedAccount')->name('member.unverified');
     Route::post('member/unverified/{member_id}/verify', 'MemberController@verifyAccount')->name('member.verify');
@@ -51,8 +57,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('sub_category', 'SubCategoryController');
 
     Route::resource('item', 'ItemController');
-    Route::post('item/{item_id}/update_stock', 'ItemController@updateStock')->name('item.update_stock');
     Route::get('item/{item_id}/review', 'ItemController@review')->name('item.review');
+
+    Route::get('varian/{item_id}/varian', 'ItemVarianController@index')->name('variant.index');
+    Route::get('varian/{item_id}/create', 'ItemVarianController@create')->name('variant.create');
+    Route::post('varian/{item_id}/store', 'ItemVarianController@store')->name('variant.store');
+    // Route::post('varian/{varaint_id}/update_stock', 'ItemVarianController@updateStock')->name('item.update_stock');
+    Route::get('varian/{item_id}/edit/{variant_id}', 'ItemVarianController@edit')->name('variant.edit');
+    Route::put('varian/{item_id}/update/{variant_id}', 'ItemVarianController@update')->name('variant.update');
+    Route::delete('varian/{item_id}/destroy/{variant_id}', 'ItemVarianController@destroy')->name('variant.destroy');
+
     Route::resource('item_hot', 'ItemHotController');
     Route::resource('item_select', 'ItemSelectController');
     Route::resource('item_image', 'itemImageController');

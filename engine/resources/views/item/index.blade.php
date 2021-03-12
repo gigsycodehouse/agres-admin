@@ -10,7 +10,7 @@
         min-width: 100px;
     }
 </style>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 @endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -51,8 +51,9 @@
                                         <th>Price</th>
                                         <th>Discount Price</th>
                                         <th>End Discount Date</th>
-                                        <th>Stock</th>
+                                        <th>Variant</th>
                                         <th>Spesification</th>
+                                        <th>Slug</th>
                                         <th>Sub Category</th>
                                         <th>Category</th>
                                         <th>Total Review</th>
@@ -66,13 +67,20 @@
                                     @foreach ($items as $item)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td class="width-100"><a href="{{route('item.show', $item->id)}}">{{$item->name}}</a></td>
+                                        <td class="width-100"><a
+                                                href="{{route('item.show', $item->id)}}">{{$item->name}}</a></td>
                                         <td class="width-100">{{$item->price}}</td>
                                         <td class="width-100">{{$item->discount_price}}</td>
                                         <td class="width-100">{{$item->end_deal}}</td>
-                                        <td class="width-100"><a href="#" data-toggle="modal" class="modal_stock"
-                                                data-item_id="{{$item->id}}" data-current_stock="{{$item->stock}}"
-                                                data-target="#update_stock">{{$item->stock}}</a></td>
+                                        <td class="width-100">
+                                            <a href="{{route('variant.index', $item->id)}}">
+                                                <ul>
+                                                    @foreach ($item->variants as $variant)
+                                                    <li>{{$variant->variant}}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </a>
+                                        </td>
                                         <td class="width-200">
                                             <ul>
                                                 @foreach (json_decode($item->spesification) as $k => $v)
@@ -80,15 +88,19 @@
                                                 @endforeach
                                             </ul>
                                         </td>
+                                        <td class="width-100">{{$item->slug}}</td>
                                         <td class="width-100">{{$item->sub_category->name}}</td>
                                         <td class="width-100">{{$item->category->name}}</td>
-                                        <td class="width-100"><a href="{{route('item.review', $item->id)}}">{{$item->review_count}}</a></td>
+                                        <td class="width-100"><a
+                                                href="{{route('item.review', $item->id)}}">{{$item->review_count}}</a>
+                                        </td>
                                         <td class="width-100">{{$item->description}}</td>
                                         <td class="width-200">{{$item->long_desc->long_description ?? '-'}}</td>
                                         <td class="width-200">
                                             <div id="imagecarousel">
                                                 @foreach ($item->image as $image)
-                                                <img src="{{asset($image->img_path.'thumbnail-'.$image->img_name)}}" alt="">
+                                                <img src="{{asset($image->img_path.'thumbnail-'.$image->img_name)}}"
+                                                    alt="">
                                                 @endforeach
                                             </div>
                                         </td>
@@ -120,35 +132,6 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<div class="modal fade" id="update_stock">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Update Stock</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="" method="POST" id="form_update_stock">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="stock">Stock</label>
-                        <input type="text" name="stock" class="form-control" id="stock" placeholder="Product stock"
-                            value="">
-                        @error('stock')
-                        <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 @endsection
 @push('js')
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>

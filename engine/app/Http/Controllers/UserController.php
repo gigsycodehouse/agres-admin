@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $d['users'] = User::all();
+        $d['users'] = User::with('role')->get();
         return view('user.index', $d);
     }
 
@@ -75,5 +75,24 @@ class UserController extends Controller
         $name = $user->name;
         $user->delete();
         return redirect()->back()->with(['success' => " delete user $name success"]);
+    }
+
+    public function updateRole(Request $request, $user_id)
+    {
+        $user = User::find($user_id);
+        $user->role_id = $request->role_id;
+        $user->save();
+        return back()->with(['success' => 'update user role success']);
+    }
+    public function updateStatus($user_id)
+    {
+        $user = User::find($user_id);
+        if ($user->status == 1){
+            $user->status = 0;
+        } else {
+            $user->status = 1;
+        }
+        $user->save();
+        return back()->with(['success' => 'update user status success']);
     }
 }

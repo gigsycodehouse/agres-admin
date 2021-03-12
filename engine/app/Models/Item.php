@@ -19,6 +19,9 @@ class Item extends Model
     function image(){
         return $this->hasMany('App\Models\ItemImage');
     }
+    function variants(){
+        return $this->hasMany('App\Models\ItemStockVariant');
+    }
     function review(){
         return $this->hasMany('App\Models\ItemReview');
     }

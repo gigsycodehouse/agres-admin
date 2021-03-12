@@ -35,9 +35,11 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Status</th>
                                         <th>Name</th>
                                         <th>phone</th>
                                         <th>email</th>
+                                        <th>Role</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -45,16 +47,43 @@
                                     @foreach ($users as $user)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
+                                        <td>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    onchange="updateStatus({{$user->id}})" id="status-{{$user->id}}"
+                                                    @if($user->status == 1) checked @endif>
+                                                <label class="custom-control-label"
+                                                    for="status-{{$user->id}}">@if($user->status == 1) Active @else Not
+                                                    Active @endif</label>
+                                            </div>
+                                        </td>
                                         <td>{{$user->name}}</td>
                                         <td>{{$user->phone}}</td>
                                         <td>{{$user->email}}</td>
+                                        <td>{{$user->role->name ?? '-'}}</td>
                                         <td class="text-center">
+                                            @if ($user->role_id == 1)
+                                            <a class="btn btn-primary" onclick="updateRole({{$user->id}}, 2)"
+                                                href="#">Make as sub Admin</a>
+                                            @else
+                                            <a class="btn btn-primary" onclick="updateRole({{$user->id}}, 1)"
+                                                href="#">Make as Admin</a>
+                                            @endif
                                             <a class="btn btn-warning" href="{{route('user.edit', $user->id)}}">Edit</a>
                                             <a class="btn btn-danger" onclick="destroy({{$user->id}})">Delete</a>
                                             <form method="POST" id="formdelete-{{$user->id}}"
                                                 action="{{route("user.destroy",$user->id)}}">
                                                 @csrf
                                                 @method("delete")
+                                            </form>
+                                            <form method="POST" id="formupdate-{{$user->id}}"
+                                                action="{{route("user.updaterole",$user->id)}}">
+                                                @csrf
+                                                <input type="hidden" name="role_id" id="role_id-{{$user->id}}">
+                                            </form>
+                                            <form method="POST" id="formstatus-{{$user->id}}"
+                                                action="{{route("user.updatestatus",$user->id)}}">
+                                                @csrf
                                             </form>
                                         </td>
                                     </tr>
@@ -87,7 +116,6 @@
     });
     $( document ).ready(function() {
         $('.table').DataTable({
-            "responsive": true,
             "autoWidth": false,
         });
     });
@@ -105,6 +133,14 @@
                 $("#formdelete-" + id).submit();
             }
         })
+    }
+    function updateRole(id, role_id) {
+        $('#role_id-'+id).val(role_id)
+        $('#formupdate-'+id).submit()
+    }
+    function updateStatus(id) {
+        console.log('masuk')
+        $('#formstatus-'+id).submit()
     }
 </script>
 

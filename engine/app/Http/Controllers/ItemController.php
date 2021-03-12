@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\ItemImage;
+use App\Models\ItemStockVariant;
 use App\Models\SubCategory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Image;
 
@@ -13,7 +15,7 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $d['items'] = Item::with('category', 'sub_category', 'image', 'long_desc')->withCount('review')->get();
+        $d['items'] = Item::with('category', 'sub_category', 'image', 'long_desc','variants')->withCount('review')->get();
         return view('item.index', $d);
     }
 
@@ -28,9 +30,20 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required',
         ]);
+        $slug = str_replace(' ', '-',$request->name);
+
+        $checkslug = Item::select('id','slug')
+                        ->where('category_id', $request->category_id)
+                        ->where('sub_category_id', $request->sub_category_id)
+                        ->where('slug', $slug)
+                        ->first();
+        if ($checkslug != null) {
+            $slug = str_replace(' ', '-',$request->name).'-'.Carbon::now()->toDateString();
+        }
 
         $store = new Item;
         $store->name = $request->name;
+        $store->slug = $slug;
         $store->price = $request->price;
         $store->stock = $request->stock;
         $store->description = $request->description;
@@ -49,18 +62,18 @@ class ItemController extends Controller
 
                 $imagePath = 'assets/images/product/';
                 $imageName =  uniqid() . '_' . $v->getClientOriginalName();
-                $thumbnailName =  'thumbnail-'.$imageName;
+                $thumbnailName =  'thumbnail-' . $imageName;
                 if (!file_exists($imagePath)) {
                     mkdir($imagePath, 0777, true);
                 }
                 $img = Image::make($v->path());
                 $img->resize(674, 674, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($imagePath.$imageName);
+                })->save($imagePath . $imageName);
 
                 $img->resize(122, 122, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($imagePath.$thumbnailName);
+                })->save($imagePath . $thumbnailName);
 
                 $image = new ItemImage;
                 $image->item_id = $store->id;
@@ -80,7 +93,7 @@ class ItemController extends Controller
 
     public function edit($id)
     {
-        $d['item'] = Item::with('image')->where('id',$id)->first();
+        $d['item'] = Item::with('image')->where('id', $id)->first();
         $d['categories'] = Category::all();
         $d['sub_categories'] = SubCategory::where('category_id', $d['item']->category_id)->get();
         return view('item.edit', $d);
@@ -106,18 +119,18 @@ class ItemController extends Controller
             foreach ($request->image as $k => $v) {
                 $imagePath = 'assets/images/product/';
                 $imageName =  uniqid() . '_' . $v->getClientOriginalName();
-                $thumbnailName =  'thumbnail-'.$imageName;
+                $thumbnailName =  'thumbnail-' . $imageName;
                 if (!file_exists($imagePath)) {
                     mkdir($imagePath, 0777, true);
                 }
                 $img = Image::make($v->path());
                 $img->resize(674, 674, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($imagePath.$imageName);
+                })->save($imagePath . $imageName);
 
                 $img->resize(122, 122, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save($imagePath.$thumbnailName);
+                })->save($imagePath . $thumbnailName);
 
                 $image = new ItemImage;
                 $image->item_id = $update->id;
@@ -135,15 +148,6 @@ class ItemController extends Controller
         $category->delete();
         return back()->with(['success' => " delete category success"]);
     }
-
-    public function updateStock(Request $request, $item_id)
-    {
-        $item = Item::find($item_id);
-        $item->stock = $request->stock;
-        $item->save();
-        return back()->with(['success' => "update stock success"]);
-    }
-
     public function review($item_id)
     {
         $d['item'] = Item::with('review')->where('id', $item_id)->first();
