@@ -23,25 +23,25 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{url('/')}}" class="nav-link">
+                    <a href="{{url('/')}}" class="nav-link pl-unset">
                         <i class="nav-icon fas fa-chart-pie"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('user.index')}}" class="nav-link">
+                    <a href="{{route('user.index')}}" class="nav-link pl-unset">
                         <i class="nav-icon fas fa-user"></i>
                         <p>User</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('blast_email.index')}}" class="nav-link">
+                    <a href="{{route('blast_email.index')}}" class="nav-link pl-unset">
                         <i class="nav-icon fas fa-user"></i>
                         <p>Blast Email</p>
                     </a>
                 </li>
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link pl-unset">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
                             Member
@@ -50,19 +50,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('member.index')}}" class="nav-link">
+                            <a href="{{route('member.index')}}" class="nav-link pl-unset">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>Verified Member</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('member.unverified')}}" class="nav-link">
+                            <a href="{{route('member.unverified')}}" class="nav-link pl-unset">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>Unverified Member</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('member_address.index')}}" class="nav-link">
+                            <a href="{{route('member_address.index')}}" class="nav-link pl-unset">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>Member Address</p>
                             </a>
@@ -70,7 +70,7 @@
                     </ul>
                 </li>
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link pl-unset">
                         <i class="nav-icon fas fa-chart-pie"></i>
                         <p>
                             CMS
@@ -78,40 +78,74 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('homepage_banner.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>Homepage Banner</p>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link pl-unset" style="padding-left: 2rem">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                    Homepage
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
                             </a>
+                            <ul class="nav nav-treeview" style="padding-left: 1rem">
+                                <li class="nav-item">
+                                    <a href="{{route('homepage_banner.index')}}" class="nav-link pl-unset">
+                                        <i class="nav-icon fas caret-right"></i>
+                                        <p>Homepage Banner</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('homepage_promo_banner.index')}}" class="nav-link pl-unset">
+                                        <i class="nav-icon fas caret-right"></i>
+                                        <p>Homepage Promo Banner</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('homepage_bottom_menu.index')}}" class="nav-link pl-unset">
+                                        <i class="nav-icon fas caret-right"></i>
+                                        <p>Homepage Bottom Menu</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('homepage_top_menu.index')}}" class="nav-link pl-unset">
+                                        <i class="nav-icon fas caret-right"></i>
+                                        <p>Homepage Top Menu</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{route('homepage_promo_banner.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>Homepage Promo Banner</p>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link pl-unset" style="padding-left: 2rem">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                    Category Catalog
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('homepage_bottom_menu.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>Homepage Bottom Menu</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('homepage_top_menu.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>Homepage Top Menu</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('catalog_banner.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>Catalog Banner</p>
-                            </a>
+                            <ul class="nav nav-treeview" style="padding-left: 1rem">
+                                <li class="nav-item">
+                                    <a href="{{route('catalog_banner.index')}}" class="nav-link pl-unset">
+                                        <i class="nav-icon fas caret-right"></i>
+                                        <p>Banner</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('catalog_promo_banner.index')}}" class="nav-link pl-unset">
+                                        <i class="nav-icon fas caret-right"></i>
+                                        <p>Promo Menarik Banner</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('catalog_special_banner.index')}}" class="nav-link pl-unset">
+                                        <i class="nav-icon fas caret-right"></i>
+                                        <p>Special Deal Banner</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link pl-unset">
                         <i class="nav-icon fas fa-chart-pie"></i>
                         <p>
                             Product
@@ -120,31 +154,31 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('category.index')}}" class="nav-link">
+                            <a href="{{route('category.index')}}" class="nav-link pl-unset">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>Category</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('sub_category.index')}}" class="nav-link">
+                            <a href="{{route('sub_category.index')}}" class="nav-link pl-unset">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>Sub Category</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('item.index')}}" class="nav-link">
+                            <a href="{{route('item.index')}}" class="nav-link pl-unset">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>Product</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('item_hot.index')}}" class="nav-link">
+                            <a href="{{route('item_hot.index')}}" class="nav-link pl-unset">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>Product Hot Section</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('item_select.index')}}" class="nav-link">
+                            <a href="{{route('item_select.index')}}" class="nav-link pl-unset">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>Product Pilihan Section</p>
                             </a>

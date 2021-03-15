@@ -38,6 +38,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
             max-width: 200px;
             padding: 15px
         }
+
+        .pl-unset {
+            padding-left: unset;
+        }
     </style>
     @stack('css')
 </head>

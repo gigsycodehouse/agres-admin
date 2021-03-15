@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('homepage_banner', 'HomeBannerController');
     Route::resource('catalog_banner', 'CatalogBannerController');
+    Route::resource('catalog_promo_banner', 'CatalogPromoBannerController');
+    Route::resource('catalog_special_banner', 'CatalogSpecialDealBannerController');
     Route::resource('homepage_bottom_menu', 'HomeBottomMenuController');
     Route::resource('homepage_top_menu', 'HomeTopMenuController');
     Route::resource('homepage_promo_banner', 'HomePromoBannerController');
