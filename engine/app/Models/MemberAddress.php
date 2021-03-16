@@ -17,6 +17,9 @@ class MemberAddress extends Model
         return $this->belongsTo('App\Models\City', 'city_id');
     }
     function district(){
-        return $this->belongsTo('App\Models\District', 'district_id');
+        return $this->belongsTo('App\Models\Suburb', 'district_id');
+    }
+    function area(){
+        return $this->belongsTo('App\Models\Area', 'area_id');
     }
 }

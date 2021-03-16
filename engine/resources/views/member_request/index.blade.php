@@ -1,19 +1,28 @@
 @extends('layouts.master')
 @section('main_content')
+@push('css')
+<style>
+    td {
+        max-width: 200px;
+    }
+
+    td img {
+        max-width: inherit;
+    }
+</style>
+@endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>List Address for User <b>{{$member->name}}</b></h1>
-                    <a class="btn btn-primary mt-3" href="{{route('member_address.create', $member->id)}}">Add New
-                        Address</a>
+                    <h1>Member Request</h1>
+                    <a class="btn btn-primary mt-3" href="{{route('member_request.create')}}">Add New Request</a>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Member Address</a></li>
-                        <li class="breadcrumb-item active">show</li>
+                        <li class="breadcrumb-item active">member request</li>
                     </ol>
                 </div>
             </div>
@@ -37,44 +46,35 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Recipient's Name</th>
-                                        <th>Recipient's Phone</th>
-                                        <th>Full Address</th>
-                                        <th>Province</th>
-                                        <th>City</th>
-                                        <th>District</th>
-                                        <th>Area</th>
-                                        <th>Postal Code</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Subject</th>
+                                        <th>Message</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($member->address as $address)
+                                    @foreach ($data as $d)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$address->name ?? '-'}}</td>
-                                        <td>{{$address->phone ?? '-'}}</td>
-                                        <td>{{$address->address ?? '-'}}</td>
-                                        <td>{{$address->province->name ?? '-'}}</td>
-                                        <td>{{$address->city->name ?? '-'}}</td>
-                                        <td>{{$address->district->name ?? '-'}}</td>
-                                        <td>{{$address->area->name ?? '-'}}</td>
-                                        <td>{{$address->postal_code ?? '-'}}</td>
+                                        <td>{{$d->name}}</td>
+                                        <td>{{$d->email}}</td>
+                                        <td>{{$d->phone}}</td>
+                                        <td>{{$d->subject}}</td>
+                                        <td>{{$d->message}}</td>
                                         <td class="text-center">
                                             <a class="nav-link dropdown-toggle btn btn-primary" style="display: unset" data-toggle="dropdown" href="#">
                                                 Menu <span class="caret"></span>
                                             </a>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" tabindex="-1"
-                                                    href="{{route('member_address.edit', ['member_id' => $member->id, 'address_id'=>$address->id])}}">Edit</a>
+                                                    href="{{route('member_request.edit', $d->id)}}">Edit</a>
                                                 <a class="dropdown-item" tabindex="-1" href="#"
-                                                    onclick="destroy({{$address->id}})">Delete</a>
+                                                    onclick="destroy({{$d->id}})">Delete</a>
                                             </div>
-                                            {{-- <a class="btn btn-warning"
-                                                href="{{route('member_address.edit', ['member_id' => $member->id, 'address_id'=>$address->id])}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$address->id}})">Delete</a> --}}
-                                            <form method="POST" id="formdelete-{{$address->id}}"
-                                                action="{{route("member_address.destroy",['member_id' => $member->id, 'address_id'=>$address->id])}}">
+                                            <form method="POST" id="formdelete-{{$d->id}}"
+                                                action="{{route("member_request.destroy",$d->id)}}">
                                                 @csrf
                                                 @method("delete")
                                             </form>

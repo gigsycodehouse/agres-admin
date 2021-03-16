@@ -6,11 +6,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit {{$member->name}}</h1>
+                    <h1>Edit {{$member->name}} Address</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">User</a></li>
+                        <li class="breadcrumb-item"><a href="#">member address</a></li>
                         <li class="breadcrumb-item active">edit</li>
                     </ol>
                 </div>
@@ -63,7 +63,7 @@
                                     <select class="form-control select2" name="province_id" id="province_id">
                                         <option disabled>select province</option>
                                         @foreach ($provinces as $province)
-                                        <option value="{{$province->id}}" @if ($address->province_id == $province->id) selected @endif>{{$province->nm_propinsi}}</option>
+                                        <option value="{{$province->id}}" @if ($address->province_id == $province->id) selected @endif>{{$province->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('province_id')
@@ -83,6 +83,14 @@
                                     <select class="form-control select2" name="district_id" id="district_id">
                                     </select>
                                     @error('district_id')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="area_id">Area</label>
+                                    <select class="form-control select2" name="area_id" id="area_id">
+                                    </select>
+                                    @error('area_id')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
@@ -136,7 +144,7 @@
                     if (val.id == '{{$address->city_id}}'){
                         selected = 'selected'
                     }
-                    $('#city_id').append(`<option value="`+val.id+`" `+selected+`>`+val.type+` `+val.nm_kota+`</option>`)
+                    $('#city_id').append(`<option value="`+val.id+`" `+selected+`>`+val.name+`</option>`)
                 })
                 $("#city_id").change();
             }
@@ -158,7 +166,25 @@
                     if (val.id == '{{$address->district_id}}'){
                         selected = 'selected'
                     }
-                    $('#district_id').append(`<option value="`+val.id+`" `+selected+`>`+val.nm_kecamatan+`</option>`)
+                    $('#district_id').append(`<option value="`+val.id+`" `+selected+`>`+val.name+`</option>`)
+                })
+                $("#district_id").change();
+            }
+        })
+    })
+
+    $('#district_id').change(function(){
+        var district_id = $('#district_id').find(":selected").val();
+        $.ajax({
+            url: `{{url('/')}}/get/`+district_id+`/areas`,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'get',
+            success: function (data){
+                $('#area_id').empty()
+                $.each(data, function(index, val){
+                    $('#area_id').append(`<option value="`+val.id+`">`+val.name+`</option>`)
                 })
             }
         })

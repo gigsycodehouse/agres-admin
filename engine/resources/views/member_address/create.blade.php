@@ -62,7 +62,7 @@
                                     <select class="form-control select2" name="province_id" id="province_id">
                                         <option disabled selected>select province</option>
                                         @foreach ($provinces as $province)
-                                        <option value="{{$province->id}}">{{$province->nm_propinsi}}</option>
+                                        <option value="{{$province->id}}">{{$province->name}}</option>
                                         @endforeach
                                     </select>
                                     {{-- <input type="text" name="province_id" class="form-control" id="province_id" placeholder="province_id" value="{{old('province_id')}}">
@@ -84,6 +84,14 @@
                                     <select class="form-control select2" name="district_id" id="district_id">
                                     </select>
                                     @error('district_id')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="area_id">Area</label>
+                                    <select class="form-control select2" name="area_id" id="area_id">
+                                    </select>
+                                    @error('area_id')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
@@ -133,7 +141,7 @@
             success: function (data){
                 $('#city_id').empty()
                 $.each(data, function(index, val){
-                    $('#city_id').append(`<option value="`+val.id+`">`+val.type+` `+val.nm_kota+`</option>`)
+                    $('#city_id').append(`<option value="`+val.id+`">`+val.name+`</option>`)
                 })
                 $("#city_id").change();
             }
@@ -151,7 +159,24 @@
             success: function (data){
                 $('#district_id').empty()
                 $.each(data, function(index, val){
-                    $('#district_id').append(`<option value="`+val.id+`">`+val.nm_kecamatan+`</option>`)
+                    $('#district_id').append(`<option value="`+val.id+`">`+val.name+`</option>`)
+                })
+            }
+        })
+    })
+
+    $('#district_id').change(function(){
+        var district_id = $('#district_id').find(":selected").val();
+        $.ajax({
+            url: `{{url('/')}}/get/`+district_id+`/areas`,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method: 'get',
+            success: function (data){
+                $('#area_id').empty()
+                $.each(data, function(index, val){
+                    $('#area_id').append(`<option value="`+val.id+`">`+val.name+`</option>`)
                 })
             }
         })

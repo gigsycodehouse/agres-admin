@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('get/{category_id}/sub_category', 'Controller@getSubCategory')->name('get.subcategory');
     Route::get('get/{province_id}/cities', 'Controller@getCities')->name('get.city');
     Route::get('get/{city_id}/districts', 'Controller@getDistricts')->name('get.district');
+    Route::get('get/{district_id}/areas', 'Controller@getAreas')->name('get.area');
 
     Route::resource('user', 'UserController');
     Route::post('user/{user_id}/updaterole', 'UserController@updateRole')->name('user.updaterole');
@@ -36,7 +37,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('member', 'MemberController');
     Route::get('member/unverified/get', 'MemberController@unverifiedAccount')->name('member.unverified');
     Route::post('member/unverified/{member_id}/verify', 'MemberController@verifyAccount')->name('member.verify');
-
     Route::get('member_address/', 'MemberAddressController@index')->name('member_address.index');
     Route::get('member_address/{member_id}/show', 'MemberAddressController@show')->name('member_address.show');
     Route::get('member_address/{member_id}/create', 'MemberAddressController@create')->name('member_address.create');
@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('member_address/{member_id}/edit/{address_id}', 'MemberAddressController@edit')->name('member_address.edit');
     Route::put('member_address/{member_id}/update/{address_id}', 'MemberAddressController@update')->name('member_address.update');
     Route::delete('member_address/{member_id}/destroy/{address_id}', 'MemberAddressController@destroy')->name('member_address.destroy');
+    Route::resource('member_request', 'MemberRequestController');
 
     Route::resource('homepage_banner', 'HomeBannerController');
     Route::resource('catalog_banner', 'CatalogBannerController');
@@ -71,6 +72,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('item_hot', 'ItemHotController');
     Route::resource('item_select', 'ItemSelectController');
+    Route::resource('item_best', 'ItemBestController');
+    Route::resource('item_newest', 'ItemNewestController');
     Route::resource('item_image', 'itemImageController');
 
 

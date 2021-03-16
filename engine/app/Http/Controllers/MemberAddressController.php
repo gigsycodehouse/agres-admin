@@ -64,6 +64,7 @@ class MemberAddressController extends Controller
         $address->province_id = $request->province_id;
         $address->city_id = $request->city_id;
         $address->district_id = $request->district_id;
+        $address->area_id = $request->area_id;
         $address->postal_code = $request->postal_code;
         $address->save();
 

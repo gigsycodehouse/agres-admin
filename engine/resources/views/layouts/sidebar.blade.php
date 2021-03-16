@@ -67,6 +67,12 @@
                                 <p>Member Address</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route('member_request.index')}}" class="nav-link pl-unset">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Member Request</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item has-treeview">
@@ -146,7 +152,7 @@
                 </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link pl-unset">
-                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <i class="nav-icon fas fa-laptop"></i>
                         <p>
                             Product
                             <i class="right fas fa-angle-left"></i>
@@ -155,32 +161,44 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('category.index')}}" class="nav-link pl-unset">
-                                <i class="nav-icon fas fa-user"></i>
+                                <i class="nav-icon fas fa-laptop"></i>
                                 <p>Category</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('sub_category.index')}}" class="nav-link pl-unset">
-                                <i class="nav-icon fas fa-user"></i>
+                                <i class="nav-icon fas fa-laptop"></i>
                                 <p>Sub Category</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('item.index')}}" class="nav-link pl-unset">
-                                <i class="nav-icon fas fa-user"></i>
+                                <i class="nav-icon fas fa-laptop"></i>
                                 <p>Product</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('item_hot.index')}}" class="nav-link pl-unset">
-                                <i class="nav-icon fas fa-user"></i>
+                                <i class="nav-icon fas fa-laptop"></i>
                                 <p>Product Hot Section</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('item_select.index')}}" class="nav-link pl-unset">
-                                <i class="nav-icon fas fa-user"></i>
+                                <i class="nav-icon fas fa-laptop"></i>
                                 <p>Product Pilihan Section</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('item_best.index')}}" class="nav-link pl-unset">
+                                <i class="nav-icon fas fa-laptop"></i>
+                                <p>Product Best Seller Section</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('item_newest.index')}}" class="nav-link pl-unset">
+                                <i class="nav-icon fas fa-laptop"></i>
+                                <p>Product Newest Section</p>
                             </a>
                         </li>
                     </ul>

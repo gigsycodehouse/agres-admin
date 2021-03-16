@@ -1,19 +1,28 @@
 @extends('layouts.master')
 @section('main_content')
+@push('css')
+<style>
+    .width-200 {
+        min-width: 200px;
+    }
+
+    .width-100 {
+        min-width: 100px;
+    }
+</style>
+@endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>List Address for User <b>{{$member->name}}</b></h1>
-                    <a class="btn btn-primary mt-3" href="{{route('member_address.create', $member->id)}}">Add New
-                        Address</a>
+                    <h1>Product newest</h1>
+                    <a class="btn btn-primary mt-3" href="{{route('item_newest.create')}}">Add New Product newest</a>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Member Address</a></li>
-                        <li class="breadcrumb-item active">show</li>
+                        <li class="breadcrumb-item active">Product newest</li>
                     </ol>
                 </div>
             </div>
@@ -33,48 +42,37 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered table-striped">
+                            <table class="table table-bordered table-striped ">
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Recipient's Name</th>
-                                        <th>Recipient's Phone</th>
-                                        <th>Full Address</th>
-                                        <th>Province</th>
-                                        <th>City</th>
-                                        <th>District</th>
-                                        <th>Area</th>
-                                        <th>Postal Code</th>
+                                        <th>Product</th>
+                                        <th>Discount Price</th>
+                                        <th>End Discount Date</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($member->address as $address)
+                                    @foreach ($items as $item)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$address->name ?? '-'}}</td>
-                                        <td>{{$address->phone ?? '-'}}</td>
-                                        <td>{{$address->address ?? '-'}}</td>
-                                        <td>{{$address->province->name ?? '-'}}</td>
-                                        <td>{{$address->city->name ?? '-'}}</td>
-                                        <td>{{$address->district->name ?? '-'}}</td>
-                                        <td>{{$address->area->name ?? '-'}}</td>
-                                        <td>{{$address->postal_code ?? '-'}}</td>
-                                        <td class="text-center">
+                                        <td><a
+                                                href="{{route('item.show',$item->id)}}">{{$item->product->name ?? ''}}</a>
+                                        </td>
+                                        <td>{{$item->discount_price}}</td>
+                                        <td>{{$item->end_deal}}</td>
+                                        <td class="text-center width-200">
                                             <a class="nav-link dropdown-toggle btn btn-primary" style="display: unset" data-toggle="dropdown" href="#">
                                                 Menu <span class="caret"></span>
                                             </a>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" tabindex="-1"
-                                                    href="{{route('member_address.edit', ['member_id' => $member->id, 'address_id'=>$address->id])}}">Edit</a>
+                                                    href="{{route('item_newest.edit', $item->id)}}">Edit</a>
                                                 <a class="dropdown-item" tabindex="-1" href="#"
-                                                    onclick="destroy({{$address->id}})">Delete</a>
+                                                    onclick="destroy({{$item->id}})">Delete</a>
                                             </div>
-                                            {{-- <a class="btn btn-warning"
-                                                href="{{route('member_address.edit', ['member_id' => $member->id, 'address_id'=>$address->id])}}">Edit</a>
-                                            <a class="btn btn-danger" onclick="destroy({{$address->id}})">Delete</a> --}}
-                                            <form method="POST" id="formdelete-{{$address->id}}"
-                                                action="{{route("member_address.destroy",['member_id' => $member->id, 'address_id'=>$address->id])}}">
+                                            <form method="POST" id="formdelete-{{$item->id}}"
+                                                action="{{route("item_newest.destroy",$item->id)}}">
                                                 @csrf
                                                 @method("delete")
                                             </form>
@@ -109,8 +107,8 @@
     });
     $( document ).ready(function() {
         $('.table').DataTable({
-            "responsive": true,
             "autoWidth": false,
+            "scrollX": true
         });
     });
     function destroy(id) {
