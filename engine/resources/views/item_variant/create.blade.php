@@ -57,6 +57,48 @@
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
+                                <div class="form-group">
+                                    <label for="discount_price">Discount Price</label>
+                                    <input type="text" name="discount_price" class="form-control" id="discount_price"
+                                        placeholder="Enter discount_price" value="{{old('discount_price')}}">
+                                    @error('discount_price')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="bootstrap-timepicker">
+                                    <div class="form-group">
+                                        <label for="start_date">Discount Start Date</label>
+                                        <div class="input-group date" id="timepicker" data-target-input="nearest"
+                                            style="max-width: 200px">
+                                            <input type="text" name="start_date"
+                                                class="form-control datetimepicker-input" data-target="#timepicker" />
+                                            <div class="input-group-append" data-target="#timepicker"
+                                                data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                                            </div>
+                                        </div>
+                                        @error('start_date')
+                                        <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="bootstrap-timepicker">
+                                    <div class="form-group">
+                                        <label for="end_deal">Discount End Date</label>
+                                        <div class="input-group date" id="timepicker" data-target-input="nearest"
+                                            style="max-width: 200px">
+                                            <input type="text" name="end_deal" class="form-control datetimepicker-input"
+                                                data-target="#timepicker" />
+                                            <div class="input-group-append" data-target="#timepicker"
+                                                data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                                            </div>
+                                        </div>
+                                        @error('end_deal')
+                                        <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
@@ -79,6 +121,23 @@
 @endsection
 @push('js')
 <script>
-
+    $.fn.datetimepicker.Constructor.Default = $.extend({},
+        $.fn.datetimepicker.Constructor.Default,
+        { icons:{
+            time: 'fas fa-clock',
+            date: 'fas fa-calendar',
+            up: 'fas fa-arrow-up',
+            down: 'fas fa-arrow-down',
+            previous: 'fas fa-arrow-circle-left'
+            ,next: 'fas fa-arrow-circle-right',
+            today: 'far fa-calendar-check-o',
+            clear: 'fas fa-trash',
+            close: 'far fa-times' } });
+    $('.select2').select2({
+      theme: 'bootstrap4',
+    })
+    $('#timepicker').datetimepicker({
+        format: 'DD-MM-YYYY HH:mm'
+    })
 </script>
 @endpush

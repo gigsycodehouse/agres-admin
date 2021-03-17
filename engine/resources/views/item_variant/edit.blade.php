@@ -35,7 +35,7 @@
                             @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="variant">Variant Name</label>
+                                    <label for="variant">Name</label>
                                     <input type="text" name="variant" class="form-control" id="variant"
                                         placeholder="Enter variant name" value="{{$variant->variant}}">
                                     @error('variant')
@@ -43,7 +43,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="stock">Variant Stock</label>
+                                    <label for="stock">Stock</label>
                                     <input type="text" name="stock" class="form-control" id="stock"
                                         placeholder="variant stock" value="{{$variant->stock}}">
                                     @error('stock')
@@ -51,12 +51,54 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="price">Variant Price</label>
+                                    <label for="price">Price</label>
                                     <input type="text" name="price" class="form-control" id="price"
-                                        placeholder="Enter price" value="{{$variant->price}}">
+                                        placeholder="Enter price" value="{{old('price')}}">
                                     @error('price')
                                     <p class="text-danger">{{ $message }}</p>
                                     @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="discount_price">Discount Price</label>
+                                    <input type="text" name="discount_price" class="form-control" id="discount_price"
+                                        placeholder="Enter discount_price" value="{{old('discount_price')}}">
+                                    @error('discount_price')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="bootstrap-timepicker">
+                                    <div class="form-group">
+                                        <label for="start_date">Discount Start Date</label>
+                                        <div class="input-group date" id="timepicker" data-target-input="nearest"
+                                            style="max-width: 200px">
+                                            <input type="text" name="start_date"
+                                                class="form-control datetimepicker-input" data-target="#timepicker" />
+                                            <div class="input-group-append" data-target="#timepicker"
+                                                data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                                            </div>
+                                        </div>
+                                        @error('start_date')
+                                        <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="bootstrap-timepicker">
+                                    <div class="form-group">
+                                        <label for="end_deal">Discount End Date</label>
+                                        <div class="input-group date" id="timepicker" data-target-input="nearest"
+                                            style="max-width: 200px">
+                                            <input type="text" name="end_deal" class="form-control datetimepicker-input"
+                                                data-target="#timepicker" />
+                                            <div class="input-group-append" data-target="#timepicker"
+                                                data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                                            </div>
+                                        </div>
+                                        @error('end_deal')
+                                        <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             <!-- /.card-body -->

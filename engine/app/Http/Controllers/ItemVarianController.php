@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\ItemStockVariant;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ItemVarianController extends Controller
@@ -24,7 +25,10 @@ class ItemVarianController extends Controller
         $item->item_id = $item_id;
         $item->variant = $request->variant;
         $item->stock = $request->stock;
-        // $item->price = $request->price;
+        $item->price = $request->price;
+        $item->discount_price = $request->discount_price;
+        $item->start_deal = Carbon::parse($request->start_deal);
+        $item->end_deal = Carbon::parse($request->end_deal);
         $item->save();
         return redirect(route('variant.index', $item_id))->with(['success' => "create variant success"]);
     }
@@ -41,7 +45,10 @@ class ItemVarianController extends Controller
         $item = ItemStockVariant::find($variant_id);
         $item->variant = $request->variant;
         $item->stock = $request->stock;
-        // $item->price = $request->price;
+        $item->price = $request->price;
+        $item->discount_price = $request->discount_price;
+        $item->start_deal = Carbon::parse($request->start_deal);
+        $item->end_deal = Carbon::parse($request->end_deal);
         $item->save();
         return redirect(route('variant.index', $item_id))->with(['success' => "update variant success"]);
     }
