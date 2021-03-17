@@ -146,6 +146,12 @@
                                         <p>Special Deal Banner</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{route('catalog_brand.index')}}" class="nav-link pl-unset">
+                                        <i class="nav-icon fas caret-right"></i>
+                                        <p>Brand Icon</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>

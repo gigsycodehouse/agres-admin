@@ -48,9 +48,9 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Name</th>
-                                        <th>Price</th>
+                                        {{-- <th>Price</th>
                                         <th>Discount Price</th>
-                                        <th>End Discount Date</th>
+                                        <th>End Discount Date</th> --}}
                                         <th>Variant</th>
                                         <th>Spesification</th>
                                         <th>Slug</th>
@@ -69,9 +69,9 @@
                                         <td>{{$loop->iteration}}</td>
                                         <td class="width-100"><a
                                                 href="{{route('item.show', $item->id)}}">{{$item->name}}</a></td>
-                                        <td class="width-100">{{$item->price}}</td>
+                                        {{-- <td class="width-100">{{$item->price}}</td>
                                         <td class="width-100">{{$item->discount_price}}</td>
-                                        <td class="width-100">{{$item->end_deal}}</td>
+                                        <td class="width-100">{{$item->end_deal}}</td> --}}
                                         <td class="width-100">
                                             <a href="{{route('variant.index', $item->id)}}">
                                                 <ul>

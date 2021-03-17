@@ -42,6 +42,9 @@
                                         <th>Variant</th>
                                         <th>Stock</th>
                                         <th>Price</th>
+                                        <th>Discount Price</th>
+                                        <th>Start Discount Date</th>
+                                        <th>End Discount Date</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -52,6 +55,9 @@
                                         <td>{{$variant->variant}}</a></td>
                                         <td>{{$variant->stock}}</td>
                                         <td>{{$variant->price}}</td>
+                                        <td>{{$variant->discount_price}}</td>
+                                        <td>{{$variant->start_deal}}</td>
+                                        <td>{{$variant->end_deal}}</td>
                                         {{-- <td><a href="#" data-toggle="modal" class="modal_stock"
                                                 data-variant_id="{{$variant->id}}"
                                         data-current_stock="{{$variant->stock}}"
